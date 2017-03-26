@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <EditText
+        android:id="@+id/courier_com"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="快递公司"
+        android:text="sf"/>
+
+    <EditText
+        android:id="@+id/courier_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="快递单号"
+        android:text="216633371749"/>
+
+    <Button
+        android:id="@+id/get_courier"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_bg"
+        android:text="查询"
+        android:textColor="@android:color/white"/>
+
+    <ListView
+        android:scrollbars="none"
+        android:paddingLeft="10dp"
+        android:id="@+id/courier_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>

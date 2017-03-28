@@ -32,5 +32,7 @@
     <string name="sex">性别：</string>
     <string name="confirm_modi">确定修改</string>
     <string name="n"/>
+    <string name="location_search">归属地查询</string>
+    <string name="exit">退出登陆</string>
 
 </resources>

@@ -1,8 +1,10 @@
 package com.hultron.smartbulter.fragment;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -21,9 +23,11 @@ import android.widget.Toast;
 
 import com.hultron.smartbulter.R;
 import com.hultron.smartbulter.entity.MyUser;
+import com.hultron.smartbulter.ui.BaseActivity;
 import com.hultron.smartbulter.ui.CourierActivity;
 import com.hultron.smartbulter.ui.LoginActivity;
 import com.hultron.smartbulter.ui.PhoneActivity;
+import com.hultron.smartbulter.ui.UserActivity;
 import com.hultron.smartbulter.uitils.L;
 import com.hultron.smartbulter.uitils.UtilTools;
 import com.hultron.smartbulter.view.CustomDialog;
@@ -59,7 +63,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     public static final int TAKE_PHOTO = 0;
     public static final int CHOOSE_PHOTO = 1;
     public static final int CROP = 100;
-    private Uri imageUri;
     private File tempFile = null;
 
 
@@ -80,22 +83,14 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     }
 
     private void findView(View v) {
-        mExitLogin = (Button) v.findViewById(R.id.exit);
-        mExitLogin.setOnClickListener(this);
         mEditUser = (TextView) v.findViewById(R.id.edit_user);
         mEditUser.setOnClickListener(this);
         mUserName = (EditText) v.findViewById(R.id.et_username);
         mAge = (EditText) v.findViewById(R.id.et_ages);
         mSex = (EditText) v.findViewById(R.id.et_sex);
         mDesc = (EditText) v.findViewById(R.id.et_desc);
-        mConUpdate = (Button) v.findViewById(R.id.confirm_update);
-        mConUpdate.setOnClickListener(this);
         mAddPic = (CircleImageView) v.findViewById(R.id.profile_image);
         mAddPic.setOnClickListener(this);
-        mCourier = (TextView) v.findViewById(R.id.courier);
-        mCourier.setOnClickListener(this);
-        mPhoLocation = (TextView) v.findViewById(R.id.pho_location);
-        mPhoLocation.setOnClickListener(this);
 
 
         UtilTools.getImageFromShare(getActivity(), mAddPic);
@@ -131,57 +126,10 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.exit:
-                //退出登陆
-                MyUser.logOut();   //清除缓存用户对象
-                BmobUser currentUser = BmobUser.getCurrentUser(); // 现在的currentUser是null了
-                startActivity(new Intent(getActivity(), LoginActivity.class));
-                getActivity().finish();
-                break;
             case R.id.edit_user:
                 //编辑资料
                 mConUpdate.setVisibility(View.VISIBLE);
                 setEnabled(true);
-                break;
-            case R.id.confirm_update:
-                //1.拿到输入框的值
-                String username = mUserName.getText().toString();
-                String sex = mSex.getText().toString();
-                String age = mAge.getText().toString();
-                String desc = mDesc.getText().toString();
-
-                //2.判断是否为空
-                if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(sex) && !TextUtils
-                        .isEmpty(age)) {
-                    //3.更新属性
-                    MyUser newUser = new MyUser();
-                    newUser.setUsername(username);
-                    newUser.setSex(sex.equals("男"));
-                    newUser.setAge(Integer.parseInt(age));
-                    if (!TextUtils.isEmpty(desc)) {
-                        newUser.setDesc(desc);
-                    } else {
-                        newUser.setDesc("这个人很懒，什么都没有留下！！！");
-                    }
-
-                    BmobUser bmobUser = BmobUser.getCurrentUser();
-                    newUser.update(bmobUser.getObjectId(), new UpdateListener() {
-                        @Override
-                        public void done(BmobException e) {
-                            if (e == null) {
-                                setEnabled(false);
-                                mConUpdate.setVisibility(View.GONE);
-                                Toast.makeText(getActivity(), "更新用户信息成功", Toast.LENGTH_SHORT)
-                                        .show();
-                            } else {
-                                Toast.makeText(getActivity(), "更新用户信息失败:" + e.getMessage(),
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                } else {
-                    Toast.makeText(getActivity(), "输入框不能为空", Toast.LENGTH_SHORT).show();
-                }
                 break;
             case R.id.profile_image:
                 mDialog.show();
@@ -196,12 +144,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.btn_cancel:
                 mDialog.dismiss();
-                break;
-            case R.id.courier:
-                startActivity(new Intent(getActivity(), CourierActivity.class));
-                break;
-            case R.id.pho_location:
-                startActivity(new Intent(getActivity(), PhoneActivity.class));
                 break;
         }
     }

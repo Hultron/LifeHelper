@@ -47,6 +47,8 @@ dependencies {
     compile 'com.tencent.bugly:nativecrashreport:latest.release'
     //CircleImageView
     compile 'de.hdodenhof:circleimageview:2.1.0'
+    //design支持库
+    compile 'com.android.support:design:25.3.0'
     //Picasso
     compile 'com.squareup.picasso:picasso:2.5.2'
     //photoview

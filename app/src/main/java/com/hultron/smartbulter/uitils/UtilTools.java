@@ -4,6 +4,7 @@ package com.hultron.smartbulter.uitils;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -54,7 +55,7 @@ public class UtilTools {
 
     //获取版本号
     public static String getVersion(Context context) {
-        PackageManager pm =  context.getPackageManager();
+        PackageManager pm = context.getPackageManager();
         try {
             PackageInfo info = pm.getPackageInfo(context.getPackageName(), 0);
             return info.versionName;
@@ -62,4 +63,27 @@ public class UtilTools {
             return "未知";
         }
     }
+
+    //压缩图片
+    public static Bitmap getCompressBitmap(String path) {
+        int BASE_SIZE = 400; //需要压缩到的最小宽高
+        Bitmap bitmap;
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        //只计算几何尺寸不返回bitmap，这样不会占用内存
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, options);
+
+        int width = options.outWidth;
+        int height = options.outHeight;
+        int min = width < height ? width : height;
+        int rate = min / BASE_SIZE; //压缩倍率
+        if (rate < 1) {
+            rate = 1;
+        }
+        options.inSampleSize = rate;
+        options.inJustDecodeBounds = false;
+        bitmap = BitmapFactory.decodeFile(path, options);
+        return bitmap;
+    }
+
 }

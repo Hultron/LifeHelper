@@ -1,32 +1,77 @@
 package com.hultron.smartbulter;
 
+import android.annotation.TargetApi;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.PersistableBundle;
+import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.hultron.smartbulter.entity.MyUser;
 import com.hultron.smartbulter.fragment.ButlerFragment;
 import com.hultron.smartbulter.fragment.GirlsFragment;
 import com.hultron.smartbulter.fragment.UserFragment;
 import com.hultron.smartbulter.fragment.NewsFragment;
+
+import com.hultron.smartbulter.ui.AboutSoftwareActivity;
+import com.hultron.smartbulter.ui.CourierActivity;
+import com.hultron.smartbulter.ui.LoginActivity;
+import com.hultron.smartbulter.ui.PhoneActivity;
 import com.hultron.smartbulter.ui.SettingActivity;
+import com.hultron.smartbulter.ui.UserActivity;
+import com.hultron.smartbulter.view.CustomDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private static final String TAG = "MainActivity";
+import cn.bmob.v3.BmobUser;
+import de.hdodenhof.circleimageview.CircleImageView;
 
+
+public class MainActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+
+    private static final String TAG = "MainActivity";
+    private static final int REQUEST_CODE_WRITE_SETTINGS = 0;
+    /*
+    * DrawerLayout
+    * */
+    private DrawerLayout mDrawerLayout;
+    Toolbar mToolbar;
+    NavigationView navView;
+    //圆形头像
+    private CircleImageView mAvatar;
+    private RelativeLayout mNavHeader;
+    private CustomDialog mDialog;
     //TabLayout
-    private TabLayout mTabLayout;
+    TabLayout mTabLayout;
     //ViewPager
-    private ViewPager mViewPager;
+    ViewPager mViewPager;
     //Title
     private List<String> mTitles;
     //Fragment
@@ -34,17 +79,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //悬浮按钮
     private FloatingActionButton mFabSetting;
 
+    private Button mConfirmUpdate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //去掉阴影
-        getSupportActionBar().setElevation(0);
-
         initData();
         initView();
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                break;
+            default:
+        }
+        return true;
     }
 
     //初始化数据
@@ -67,37 +122,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //初始化View
     private void initView() {
 
+        //DrawerLayout
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        navView = (NavigationView) findViewById(R.id.nav_view);
+        navView.setNavigationItemSelectedListener(this);
+        setSupportActionBar(mToolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.titlebar_menu);
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
+        View headerView = navView.inflateHeaderView(R.layout.nav_header);
+        mAvatar = (CircleImageView) headerView.findViewById(R.id.avatar);
+        mAvatar.setOnClickListener(this);
+
+        //TabLayout
         mTabLayout = (TabLayout) findViewById(R.id.mTabLayout);
         mViewPager = (ViewPager) findViewById(R.id.mViewPager);
-        mFabSetting = (FloatingActionButton) findViewById(R.id.fab_setting);
-        mFabSetting.setVisibility(View.GONE);
-        mFabSetting.setOnClickListener(this);
 
         //预加载
         mViewPager.setOffscreenPageLimit(mFragments.size());
-
-        //ViewPager 滑动监听
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int
-                    positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                Log.i(TAG, "onPageSelected: " + position);
-                if (position == 0) {
-                    mFabSetting.setVisibility(View.GONE);
-                } else {
-                    mFabSetting.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
         //设置适配器
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -122,13 +168,100 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //绑定
         mTabLayout.setupWithViewPager(mViewPager);
+
+        //writeSettingsPermission();
+    }
+
+    @TargetApi(23)
+    private void writeSettingsPermission() {
+        if(!Settings.System.canWrite(this)){
+            AlertDialog dialog = new AlertDialog.Builder(this)
+                    .setTitle("WRITE_SETTINGS权限申请")
+                    .setMessage("点击OK进入设置界面授予权限")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS,
+                                    Uri.parse("package:" + getPackageName()));
+                            startActivityForResult(intent, REQUEST_CODE_WRITE_SETTINGS);
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(MainActivity.this, "WRITE_SETINGS permission denied",
+                                    Toast
+                                    .LENGTH_SHORT)
+                                    .show();
+                        }
+                    })
+                    .create();
+            dialog.show();
+        }
+    }
+
+    @Override
+    @TargetApi(23)
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_WRITE_SETTINGS) {
+            if (Settings.System.canWrite(this)) {
+                Toast.makeText(this, "WRITE_SETTINGS permission granted", Toast.LENGTH_SHORT)
+                        .show();
+            } else {
+                Toast.makeText(this, "WRITE_SETINGS permission denied", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_courier:
+                startActivity(new Intent(this, CourierActivity.class));
+                return true;
+            case R.id.nav_phone_loc:
+                startActivity(new Intent(this, PhoneActivity.class));
+                return true;
+            case R.id.nav_custom_setting:
+                startActivity(new Intent(this, SettingActivity.class));
+                return true;
+            case R.id.nav_exit:
+                AlertDialog dialog = new AlertDialog.Builder(this)
+                        .setTitle("提示！")
+                        .setMessage("是否退出登陆？")
+                        .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //退出登陆
+                                MyUser.logOut();   //清除缓存用户对象
+                                // 现在的currentUser是null了
+                                BmobUser currentUser = BmobUser.getCurrentUser();
+                                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                                finish();
+                            }
+                        }).setNegativeButton("否", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .create();
+                dialog.show();
+                return true;
+            case R.id.nav_about_software:
+                startActivity(new Intent(this, AboutSoftwareActivity.class));
+                return true;
+        }
+        return false;
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.fab_setting:
-                startActivity(new Intent(this, SettingActivity.class));
+            case R.id.avatar:
+                startActivity(new Intent(this, UserActivity.class));
+                mDrawerLayout.closeDrawers();
                 break;
         }
     }

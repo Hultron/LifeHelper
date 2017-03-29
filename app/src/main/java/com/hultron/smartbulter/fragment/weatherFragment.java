@@ -42,7 +42,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static android.app.Activity.RESULT_OK;
 
 
-public class UserFragment extends Fragment implements View.OnClickListener {
+public class weatherFragment extends Fragment implements View.OnClickListener {
 
     private Button mExitLogin, mConUpdate;
     private TextView mEditUser;

@@ -1,17 +1,9 @@
 package com.hultron.smartbulter;
 
-import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.PersistableBundle;
-import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -23,19 +15,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.hultron.smartbulter.entity.MyUser;
 import com.hultron.smartbulter.fragment.ButlerFragment;
 import com.hultron.smartbulter.fragment.GirlsFragment;
-import com.hultron.smartbulter.fragment.UserFragment;
+import com.hultron.smartbulter.fragment.weatherFragment;
 import com.hultron.smartbulter.fragment.NewsFragment;
 
 import com.hultron.smartbulter.ui.AboutSoftwareActivity;
@@ -44,9 +30,7 @@ import com.hultron.smartbulter.ui.LoginActivity;
 import com.hultron.smartbulter.ui.PhoneActivity;
 import com.hultron.smartbulter.ui.SettingActivity;
 import com.hultron.smartbulter.ui.UserActivity;
-import com.hultron.smartbulter.uitils.ShareUtils;
 import com.hultron.smartbulter.uitils.UtilTools;
-import com.hultron.smartbulter.view.CustomDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,21 +51,17 @@ public class MainActivity extends AppCompatActivity implements
     Toolbar mToolbar;
     NavigationView navView;
     //圆形头像
-    private CircleImageView mAvatar;
-    private RelativeLayout mNavHeader;
-    private CustomDialog mDialog;
+    CircleImageView mAvatar;
     //TabLayout
     TabLayout mTabLayout;
     //ViewPager
     ViewPager mViewPager;
+
     //Title
     private List<String> mTitles;
     //Fragment
     private List<Fragment> mFragments;
-    //悬浮按钮
-    private FloatingActionButton mFabSetting;
 
-    private Button mConfirmUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,13 +90,13 @@ public class MainActivity extends AppCompatActivity implements
         mTitles.add(getString(R.string.service_butler));
         mTitles.add(getString(R.string.wechat_news));
         mTitles.add(getString(R.string.girls_community));
-        mTitles.add(getString(R.string.user_center));
+        mTitles.add(getString(R.string.recent_weather));
 
         mFragments = new ArrayList<>();
         mFragments.add(new ButlerFragment());
         mFragments.add(new NewsFragment());
         mFragments.add(new GirlsFragment());
-        mFragments.add(new UserFragment());
+        mFragments.add(new weatherFragment());
 
 
     }

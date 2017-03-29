@@ -3,6 +3,7 @@ package com.hultron.smartbulter.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -17,6 +18,7 @@ import com.hultron.smartbulter.MainActivity;
 import com.hultron.smartbulter.R;
 import com.hultron.smartbulter.entity.MyUser;
 import com.hultron.smartbulter.uitils.ShareUtils;
+import com.hultron.smartbulter.uitils.UtilTools;
 import com.hultron.smartbulter.view.CustomDialog;
 
 import cn.bmob.v3.exception.BmobException;
@@ -35,16 +37,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private CheckBox mKeepPass;
 
     private CustomDialog mCustomDialog;
+    private TextView appLabel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        //隐藏系统自带标题栏
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
         initView();
     }
 
     private void initView() {
+        appLabel = (TextView) findViewById(R.id.label);
+        UtilTools.setFont(this, appLabel);
         mRegister = (Button) findViewById(R.id.btn_register);
         mRegister.setOnClickListener(this);
         mUserName = (EditText) findViewById(R.id.user_name);

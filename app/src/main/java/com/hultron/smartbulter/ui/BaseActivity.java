@@ -77,12 +77,20 @@ public class BaseActivity extends AppCompatActivity {
         }
         mRequestCode = requestCode;
         mListener = listener;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             if (checkEachSelfPermission(permissions)) {//检查是否声明了权限
                 requestEachPermissions(desc, permissions, requestCode);
-
+            } else {
+                if (mListener != null) {
+                    mListener.onPermissionGranted();
+                }
+            }
+        } else {
+            if (mListener != null) {
+                mListener.onPermissionGranted();
             }
         }
+
     }
 
     /*

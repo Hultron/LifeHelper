@@ -44,6 +44,8 @@ import com.hultron.smartbulter.ui.LoginActivity;
 import com.hultron.smartbulter.ui.PhoneActivity;
 import com.hultron.smartbulter.ui.SettingActivity;
 import com.hultron.smartbulter.ui.UserActivity;
+import com.hultron.smartbulter.uitils.ShareUtils;
+import com.hultron.smartbulter.uitils.UtilTools;
 import com.hultron.smartbulter.view.CustomDialog;
 
 import java.util.ArrayList;
@@ -136,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements
         }
         View headerView = navView.inflateHeaderView(R.layout.nav_header);
         mAvatar = (CircleImageView) headerView.findViewById(R.id.avatar);
+        UtilTools.getImageFromShare(this, mAvatar);
         mAvatar.setOnClickListener(this);
 
         //TabLayout
@@ -168,52 +171,8 @@ public class MainActivity extends AppCompatActivity implements
 
         //绑定
         mTabLayout.setupWithViewPager(mViewPager);
-
-        //writeSettingsPermission();
     }
 
-    @TargetApi(23)
-    private void writeSettingsPermission() {
-        if(!Settings.System.canWrite(this)){
-            AlertDialog dialog = new AlertDialog.Builder(this)
-                    .setTitle("WRITE_SETTINGS权限申请")
-                    .setMessage("点击OK进入设置界面授予权限")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS,
-                                    Uri.parse("package:" + getPackageName()));
-                            startActivityForResult(intent, REQUEST_CODE_WRITE_SETTINGS);
-                        }
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(MainActivity.this, "WRITE_SETINGS permission denied",
-                                    Toast
-                                    .LENGTH_SHORT)
-                                    .show();
-                        }
-                    })
-                    .create();
-            dialog.show();
-        }
-    }
-
-    @Override
-    @TargetApi(23)
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_WRITE_SETTINGS) {
-            if (Settings.System.canWrite(this)) {
-                Toast.makeText(this, "WRITE_SETTINGS permission granted", Toast.LENGTH_SHORT)
-                        .show();
-            } else {
-                Toast.makeText(this, "WRITE_SETINGS permission denied", Toast.LENGTH_SHORT)
-                        .show();
-            }
-        }
-    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

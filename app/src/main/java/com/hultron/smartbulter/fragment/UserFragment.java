@@ -148,7 +148,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-
     //打开相机
     private void openCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

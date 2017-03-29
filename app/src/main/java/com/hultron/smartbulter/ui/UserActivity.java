@@ -1,10 +1,8 @@
 package com.hultron.smartbulter.ui;
 
 import android.Manifest;
-import android.annotation.TargetApi;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -12,11 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.CursorLoader;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -29,12 +23,13 @@ import android.widget.Toast;
 import com.hultron.smartbulter.R;
 import com.hultron.smartbulter.entity.MyUser;
 import com.hultron.smartbulter.uitils.L;
-import com.hultron.smartbulter.uitils.StaticClass;
 import com.hultron.smartbulter.uitils.UtilTools;
 import com.hultron.smartbulter.view.CustomDialog;
-import com.iflytek.cloud.thirdparty.S;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.UUID;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
@@ -66,11 +61,10 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     private Button mConfirmUpdate;
 
     //照片以时间戳命名，避免重复
-    public static final String PHOTO_IAMGE_FILE_NAME = "fileImg"
-            + String.valueOf(System.currentTimeMillis()) + ".jpg";
-    public static final int TAKE_PHOTO = 0;
-    public static final int CHOOSE_PHOTO = 1;
-    public static final int CROP = 100;
+    public static final String PHOTO_IAMGE_FILE_NAME = "fileImg.jpg";
+    public static final int TAKE_PHOTO = 4000;
+    public static final int CHOOSE_PHOTO = 4001;
+    public static final int CROP = 4002;
     private Uri imageUri;
     private File tempFile = null;
 
@@ -127,14 +121,6 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //保存圆形图像
-        UtilTools.putImageToShare(this, mAddPic);
-        L.i("图片保存了");
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.edit_user:
@@ -186,24 +172,20 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
                 mDialog.show();
                 break;
             case R.id.btn_camera:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    performRequestPermissions("您必须授予应用相机权限，否则无法拍照",
-                            new String[]{Manifest.permission.CAMERA},
-                            CAMERA, new PermissionsResultListener() {
-                        @Override
-                        public void onPermissionGranted() {
-                            openCamera();
-                        }
-                        @Override
-                        public void onPermissionDenied() {
-                            Toast.makeText(UserActivity.this, "应用没有相机权限",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    L.e("2");
-                } else {
-                    openCamera();
-                }
+                performRequestPermissions("您必须授予应用相机权限，否则无法拍照",
+                        new String[]{Manifest.permission.CAMERA},
+                        CAMERA, new PermissionsResultListener() {
+                            @Override
+                            public void onPermissionGranted() {
+                                openCamera();
+                            }
+
+                            @Override
+                            public void onPermissionDenied() {
+                                Toast.makeText(UserActivity.this, "应用没有相机权限",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
                 mDialog.dismiss();
                 break;
             case R.id.btn_picture:
@@ -216,15 +198,6 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    //打开相机
-    private void openCamera() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        //判断内存卡是否可用，可用的话就进行储存
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment
-                .getExternalStorageDirectory(), PHOTO_IAMGE_FILE_NAME)));
-        startActivityForResult(intent, TAKE_PHOTO);
-    }
-
     //打开相册
     private void openPicture() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media
@@ -233,7 +206,16 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
         startActivityForResult(intent, CHOOSE_PHOTO);
     }
 
-    private String imagePath;
+
+    //打开相机
+    private void openCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //判断内存卡是否可用，可用的话就进行储存
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(
+                getExternalFilesDir(Environment.DIRECTORY_PICTURES), "raw_avatar.png")));
+        startActivityForResult(intent, TAKE_PHOTO);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK) {
@@ -251,19 +233,12 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
                 break;
             //相机
             case TAKE_PHOTO:
-                tempFile = new File(Environment.getExternalStorageDirectory(),
-                        PHOTO_IAMGE_FILE_NAME);
+                tempFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+                        "raw_avatar.png");
                 photoCrop(Uri.fromFile(tempFile));
                 break;
             //相册
             case CHOOSE_PHOTO:
-                Uri originUri = data.getData();
-                String[] proj = {MediaStore.Images.Media.DATA};
-                Cursor cursor = managedQuery(data.getData(), proj, null, null, null);
-                int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                cursor.moveToFirst();
-                imagePath = cursor.getString(columnIndex);
-                tempFile = new File(imagePath, PHOTO_IAMGE_FILE_NAME);
                 photoCrop(data.getData());
                 break;
             //裁剪
@@ -271,9 +246,22 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
                 if (data == null) {
                     return;
                 }
-                //拿到图片设置
+                //将图片设置为头像
                 setImageToView(data);
-                //uploadAvatar();
+                //将裁剪后的bitmap保存到本地
+                Bitmap bitmap = data.getExtras().getParcelable("data");
+                File tempAvatar = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+                        "avatar.png");
+                if (tempAvatar.exists()) {
+                    tempAvatar.delete();
+                }
+                String avatarPath = saveBitmap(bitmap, Bitmap.CompressFormat.PNG,
+                        100, tempAvatar);
+                if (avatarPath != null) {
+                    File avatarFile = new File(avatarPath);
+                    uploadAvatar(avatarFile);
+                }
+
                 //既然已经设置了图片，我们原先的应该删除
                 if (tempFile != null) {
                     tempFile.delete();
@@ -284,16 +272,38 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    private void uploadAvatar(Uri uri) {
-        File avatar = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-                PHOTO_IAMGE_FILE_NAME);
-        BmobFile bmobFile = new BmobFile(avatar);
+    //把bitmap保存到项目关联目录
+    public static String saveBitmap(Bitmap bitmap, Bitmap.CompressFormat format,
+                                    int quality, File destFile) {
+        try {
+            FileOutputStream fos = new FileOutputStream(destFile);
+            if (bitmap.compress(format, quality, fos)) {
+                fos.flush();
+                fos.close();
+            }
+            if (bitmap != null && !bitmap.isRecycled()) {
+                bitmap.recycle();
+            }
+            return destFile.getAbsolutePath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /*
+    * 云端保存头像文件
+    * */
+    private void uploadAvatar(File file) {
+        BmobFile bmobFile = new BmobFile(file);
         bmobFile.uploadblock(new UploadFileListener() {
             @Override
             public void done(BmobException e) {
                 if (e == null) {
                     Toast.makeText(UserActivity.this, "头像保存成功",
                             Toast.LENGTH_SHORT).show();
+                } else {
+                    L.e(e.toString());
                 }
             }
         });
@@ -324,6 +334,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
         if (bundle != null) {
             Bitmap bitmap = bundle.getParcelable("data");
             mAddPic.setImageBitmap(bitmap);
+            UtilTools.putImageToShare(this, mAddPic);
         }
     }
 }

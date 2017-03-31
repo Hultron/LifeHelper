@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.hultron.smartbulter">
+          package="com.hultron.lifehelper">
 
     <!-- 读取日志 -->
     <uses-permission android:name="android.permission.READ_LOGS"/>
@@ -48,7 +48,7 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
 
     <application
-        android:name=".application.BaseApplication"
+        android:name="com.hultron.lifehelper.application.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -57,17 +57,17 @@
 
 
         <!--主页-->
-        <activity android:name=".MainActivity"/>
+        <activity android:name="com.hultron.lifehelper.MainActivity"/>
 
 
         <!--设置-->
         <activity
-            android:name=".ui.SettingActivity"
+            android:name="com.hultron.lifehelper.ui.SettingActivity"
             android:label="@string/text_setting"/>
 
         <!--闪屏页，程序入口-->
         <activity
-            android:name=".ui.SplashActivity"
+            android:name="com.hultron.lifehelper.ui.SplashActivity"
             android:theme="@style/NoActionBarFullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -77,57 +77,57 @@
 
         <!--引导页-->
         <activity
-            android:name=".ui.GuideActivity"
+            android:name="com.hultron.lifehelper.ui.GuideActivity"
             android:theme="@style/NoActionBarFullScreen"/>
 
         <!--登陆-->
         <activity
-            android:name=".ui.LoginActivity"
+            android:name="com.hultron.lifehelper.ui.LoginActivity"
             android:label="@string/login">
 
         </activity>
 
         <!--注册-->
         <activity
-            android:name=".ui.RegisterActivity"
+            android:name="com.hultron.lifehelper.ui.RegisterActivity"
             android:label="@string/register"/>
 
         <!--忘记密码-->
         <activity
-            android:name=".ui.ForgetPasswordActivity"
+            android:name="com.hultron.lifehelper.ui.ForgetPasswordActivity"
             android:label="@string/forget_pass"/>
 
         <!--快递查询-->
         <activity
-            android:name=".ui.CourierActivity"
+            android:name="com.hultron.lifehelper.ui.CourierActivity"
             android:label="快递查询"/>
 
         <!--归属地查询-->
         <activity
-            android:name=".ui.PhoneActivity"
+            android:name="com.hultron.lifehelper.ui.PhoneActivity"
             android:label="归属地查询"/>
 
         <!--新闻详情-->
-        <activity android:name=".ui.NewsContentActivity"/>
+        <activity android:name="com.hultron.lifehelper.ui.NewsContentActivity"/>
 
         <!--下载新版本-->
-        <activity android:name=".ui.UpdateActivity"/>
+        <activity android:name="com.hultron.lifehelper.ui.UpdateActivity"/>
 
         <!--分享二维码-->
         <activity
-            android:name=".ui.QrCodeShareActivity"
+            android:name="com.hultron.lifehelper.ui.QrCodeShareActivity"
             android:label="我的二维码"/>
 
         <!--我的位置-->
-        <activity android:name=".ui.LocationActivity"
+        <activity android:name="com.hultron.lifehelper.ui.LocationActivity"
                   android:label="我的位置"/>
 
         <!--关于软件-->
-        <activity android:name=".ui.AboutSoftwareActivity"
+        <activity android:name="com.hultron.lifehelper.ui.AboutSoftwareActivity"
             android:label="关于软件"/>
 
         <!--短信服务-->
-        <service android:name=".service.SmsService"/>
+        <service android:name="com.hultron.lifehelper.service.SmsService"/>
 
         <!--定位服务-->
         <service android:name="com.baidu.location.f"
@@ -139,7 +139,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.hultron.smartbulter.fileprovider"
+            android:authorities="com.hultron.lifehelper.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

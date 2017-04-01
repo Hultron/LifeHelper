@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.hultron.smartbulter">
+          package="com.hultron.lifehelper">
 
     <!-- 读取日志 -->
     <uses-permission android:name="android.permission.READ_LOGS"/>
@@ -106,6 +106,10 @@
         <activity
             android:name=".ui.PhoneActivity"
             android:label="归属地查询"/>
+
+        <!--天气查询-->
+        <activity android:name=".weather.WeatherActivity"
+                  android:label="天气查询"/>
 
         <!--新闻详情-->
         <activity android:name=".ui.NewsContentActivity"/>

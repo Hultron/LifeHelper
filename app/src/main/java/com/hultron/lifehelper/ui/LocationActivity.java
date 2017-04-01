@@ -23,9 +23,9 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
-import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.application.BaseApplication;
 import com.hultron.lifehelper.uitils.L;
+import com.hultron.lifehelper.R;
 
 import java.util.ArrayList;
 import java.util.List;

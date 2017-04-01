@@ -31,6 +31,7 @@ import com.hultron.lifehelper.ui.PhoneActivity;
 import com.hultron.lifehelper.ui.SettingActivity;
 import com.hultron.lifehelper.ui.UserActivity;
 import com.hultron.lifehelper.uitils.UtilTools;
+import com.hultron.lifehelper.weather.WeatherActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,6 +166,9 @@ public class MainActivity extends AppCompatActivity implements
                 return true;
             case R.id.nav_custom_setting:
                 startActivity(new Intent(this, SettingActivity.class));
+                return true;
+            case R.id.nav_weather:
+                startActivity(new Intent(this, WeatherActivity.class));
                 return true;
             case R.id.nav_exit:
                 AlertDialog dialog = new AlertDialog.Builder(this)

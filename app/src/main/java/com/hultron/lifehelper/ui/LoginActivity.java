@@ -15,11 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hultron.lifehelper.MainActivity;
-import com.hultron.lifehelper.R;
+
 import com.hultron.lifehelper.entity.MyUser;
 import com.hultron.lifehelper.uitils.ShareUtils;
 import com.hultron.lifehelper.uitils.UtilTools;
 import com.hultron.lifehelper.view.CustomDialog;
+import com.hultron.lifehelper.R;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;

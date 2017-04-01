@@ -12,8 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.hultron.lifehelper.MainActivity;
-import com.hultron.lifehelper.R;
+import com.hultron.lifehelper.*;
 import com.hultron.lifehelper.uitils.L;
+import com.hultron.lifehelper.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,9 +4,9 @@ android {
     aaptOptions.cruncherEnabled = false
     aaptOptions.useNewCruncher = false
     compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.hultron.smartbutler"
+        applicationId "com.hultron.lifeHelper"
         minSdkVersion 21
         targetSdkVersion 25
         versionCode 1

@@ -1,6 +1,7 @@
 package com.hultron.lifehelper.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hultron.lifehelper.R;
+import com.hultron.lifehelper.ui.WeatherActivity;
 import com.hultron.lifehelper.uitils.L;
 import com.hultron.lifehelper.database.City;
 import com.hultron.lifehelper.database.County;
@@ -31,7 +33,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-import com.hultron.lifehelper.uitils.ProCityCountyParsingUtil;
+import com.hultron.lifehelper.uitils.ParsingJson;
 
 /**
  * 遍历省市县数据的碎片
@@ -101,6 +103,12 @@ public class ChooseAreaFragment extends Fragment {
                 } else if (currentLevel == LEVEL_CITY) {
                     selectedCity = cityList.get(position);
                     queryCounties();
+                } else if (currentLevel == LEVEL_COUNTY) {
+                    String weatherId = countyList.get(position).getWeatherId();
+                    Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                    intent.putExtra("weather_id", weatherId);
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });
@@ -211,9 +219,9 @@ public class ChooseAreaFragment extends Fragment {
                 L.e(responseText);
                 boolean result = false;
                 if ("province".equals(type)) {
-                    result = ProCityCountyParsingUtil.handleProvinceResponse(responseText);
+                    result = ParsingJson.handleProvinceResponse(responseText);
                 } else if ("city".equals(type)) {
-                    result = ProCityCountyParsingUtil.handleCityResponse(responseText, selectedProvince.getId());
+                    result = ParsingJson.handleCityResponse(responseText, selectedProvince.getId());
                 }
                 if (result) {
                     getActivity().runOnUiThread(new Runnable() {

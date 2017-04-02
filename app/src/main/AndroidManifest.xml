@@ -106,7 +106,7 @@
 
         <!--天气查询-->
         <activity
-            android:name=".weather.WeatherActivity"
+            android:name=".ui.WeatherActivity"
             android:label="天气查询"
             android:theme="@style/WeatherScreen">
             <intent-filter>

@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.entity.NewsData;
-import com.hultron.lifehelper.entity.PicassoUtils;
+import com.hultron.lifehelper.uitils.PicassoUtils;
 
 
 import java.util.List;

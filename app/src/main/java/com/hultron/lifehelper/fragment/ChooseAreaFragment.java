@@ -16,11 +16,10 @@ import android.widget.Toast;
 
 import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.uitils.L;
-import com.hultron.lifehelper.uitils.UtilTools;
-import com.hultron.lifehelper.weather.database.City;
-import com.hultron.lifehelper.weather.database.County;
-import com.hultron.lifehelper.weather.database.Province;
-import com.hultron.lifehelper.weather.util.HttpUtil;
+import com.hultron.lifehelper.database.City;
+import com.hultron.lifehelper.database.County;
+import com.hultron.lifehelper.database.Province;
+import com.hultron.lifehelper.uitils.HttpUtil;
 
 import org.litepal.crud.DataSupport;
 
@@ -32,7 +31,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-import com.hultron.lifehelper.weather.util.*;
+import com.hultron.lifehelper.uitils.ProCityCountyParsingUtil;
 
 /**
  * 遍历省市县数据的碎片
@@ -212,9 +211,9 @@ public class ChooseAreaFragment extends Fragment {
                 L.e(responseText);
                 boolean result = false;
                 if ("province".equals(type)) {
-                    result = utility.handleProvinceResponse(responseText);
+                    result = ProCityCountyParsingUtil.handleProvinceResponse(responseText);
                 } else if ("city".equals(type)) {
-                    result = utility.handleCityResponse(responseText, selectedProvince.getId());
+                    result = ProCityCountyParsingUtil.handleCityResponse(responseText, selectedProvince.getId());
                 }
                 if (result) {
                     getActivity().runOnUiThread(new Runnable() {

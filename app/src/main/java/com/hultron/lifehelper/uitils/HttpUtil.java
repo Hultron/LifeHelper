@@ -1,4 +1,4 @@
-package com.hultron.lifehelper.weather.util;
+package com.hultron.lifehelper.uitils;
 
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;

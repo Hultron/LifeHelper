@@ -1,4 +1,4 @@
-package com.hultron.lifehelper.entity;
+package com.hultron.lifehelper.uitils;
 
 import android.content.Context;
 import android.graphics.Bitmap;

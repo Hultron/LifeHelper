@@ -9,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.hultron.lifehelper.entity.GirlData;
-import com.hultron.lifehelper.entity.PicassoUtils;
 import com.hultron.lifehelper.R;
 
 import java.util.List;

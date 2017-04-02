@@ -1,10 +1,10 @@
-package com.hultron.lifehelper.weather.util;
+package com.hultron.lifehelper.uitils;
 
 import android.text.TextUtils;
 
-import com.hultron.lifehelper.weather.database.City;
-import com.hultron.lifehelper.weather.database.County;
-import com.hultron.lifehelper.weather.database.Province;
+import com.hultron.lifehelper.database.City;
+import com.hultron.lifehelper.database.County;
+import com.hultron.lifehelper.database.Province;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,7 +15,7 @@ import org.json.JSONObject;
  * 遍历全国省市县数据
  */
 
-public class utility {
+public class ProCityCountyParsingUtil {
 
     /*
     * 解析和处理服务器返回的省级数据

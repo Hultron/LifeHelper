@@ -16,7 +16,7 @@ import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.adapter.GirlAdapter;
 import com.hultron.lifehelper.application.BaseApplication;
 import com.hultron.lifehelper.entity.GirlData;
-import com.hultron.lifehelper.entity.PicassoUtils;
+import com.hultron.lifehelper.uitils.PicassoUtils;
 import com.hultron.lifehelper.uitils.L;
 import com.hultron.lifehelper.uitils.StaticClass;
 import com.hultron.lifehelper.view.CustomDialog;

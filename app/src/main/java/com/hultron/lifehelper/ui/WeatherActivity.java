@@ -1,4 +1,4 @@
-package com.hultron.lifehelper.weather;
+package com.hultron.lifehelper.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

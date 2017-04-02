@@ -31,7 +31,7 @@ import com.hultron.lifehelper.ui.PhoneActivity;
 import com.hultron.lifehelper.ui.SettingActivity;
 import com.hultron.lifehelper.ui.UserActivity;
 import com.hultron.lifehelper.uitils.UtilTools;
-import com.hultron.lifehelper.weather.WeatherActivity;
+import com.hultron.lifehelper.ui.WeatherActivity;
 
 import java.util.ArrayList;
 import java.util.List;

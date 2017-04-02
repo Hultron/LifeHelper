@@ -1,4 +1,4 @@
-package com.hultron.lifehelper.weather.database;
+package com.hultron.lifehelper.database;
 
 import org.litepal.crud.DataSupport;
 

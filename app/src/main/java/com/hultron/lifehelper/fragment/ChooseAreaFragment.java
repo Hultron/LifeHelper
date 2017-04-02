@@ -34,6 +34,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 import com.hultron.lifehelper.uitils.ParsingJson;
+import com.hultron.lifehelper.uitils.ShareUtils;
 
 /**
  * 遍历省市县数据的碎片
@@ -105,10 +106,11 @@ public class ChooseAreaFragment extends Fragment {
                     queryCounties();
                 } else if (currentLevel == LEVEL_COUNTY) {
                     String weatherId = countyList.get(position).getWeatherId();
-                    Intent intent = new Intent(getActivity(), WeatherActivity.class);
-                    intent.putExtra("weather_id", weatherId);
-                    startActivity(intent);
-                    getActivity().finish();
+                   WeatherActivity activity = (WeatherActivity) getActivity();
+                    activity.drawerLayout.closeDrawers();
+                    activity.swipeRefreshLayout.setRefreshing(true);
+                    ShareUtils.putString(activity, "weather_id", null);
+                    activity.requestWeather(weatherId);
                 }
             }
         });
@@ -222,6 +224,8 @@ public class ChooseAreaFragment extends Fragment {
                     result = ParsingJson.handleProvinceResponse(responseText);
                 } else if ("city".equals(type)) {
                     result = ParsingJson.handleCityResponse(responseText, selectedProvince.getId());
+                } else if ("county".equals(type)) {
+                    result = ParsingJson.handleCountyResponse(responseText, selectedCity.getId());
                 }
                 if (result) {
                     getActivity().runOnUiThread(new Runnable() {
@@ -249,7 +253,7 @@ public class ChooseAreaFragment extends Fragment {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(getActivity());
             progressDialog.setMessage("正在加载");
-            progressDialog.setCancelable(false);
+            progressDialog.setCancelable(true);
         }
         progressDialog.show();
     }

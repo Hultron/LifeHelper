@@ -9,6 +9,8 @@ import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
 import com.tencent.bugly.crashreport.CrashReport;
 
+import org.litepal.LitePalApplication;
+
 import cn.bmob.v3.Bmob;
 
 
@@ -34,6 +36,9 @@ public class BaseApplication extends Application {
 
         //初始化百度地图
         SDKInitializer.initialize(getApplicationContext());
+
+        //初始化litepal
+        LitePalApplication.initialize(mContext);
     }
 
     public static Context getContext() {

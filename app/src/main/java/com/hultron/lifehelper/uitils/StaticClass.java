@@ -41,6 +41,6 @@ public class StaticClass {
     public static final String CHECK_UPDATE_URL = "http://192.168.1.103:8088" +
             "/hultron/config.json";
 
-    //百度key
-    public static final String BAIDU_LBS_KEY = "yGG0qqxhhaLuZHXTxgPErI0zsglqZIA0";
+    //百度key 5GPKgGRH6LFO9pf9CCT3Rnnlx7BgZLXx
+    public static final String BAIDU_LBS_KEY = "5GPKgGRH6LFO9pf9CCT3Rnnlx7BgZLXx";
 }

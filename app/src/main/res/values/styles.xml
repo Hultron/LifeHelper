@@ -24,6 +24,9 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <!--天气界面主题-->
+    <style name="WeatherScreen" parent="Theme.AppCompat.Light.NoActionBar"/>
+
     <!--自定义Dialog动画-->
     <style name="pop_anim_style">
         <item name="android:windowEnterAnimation">@anim/pop_in</item>

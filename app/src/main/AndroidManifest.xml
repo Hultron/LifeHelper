@@ -82,6 +82,10 @@
         <!--登陆-->
         <activity
             android:name=".ui.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
 
         <!--注册-->
@@ -108,12 +112,7 @@
         <activity
             android:name=".ui.WeatherActivity"
             android:label="天气查询"
-            android:theme="@style/WeatherScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+            android:theme="@style/WeatherScreen"/>
 
         <!--新闻详情-->
         <activity android:name=".ui.NewsContentActivity"/>

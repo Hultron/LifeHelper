@@ -1,5 +1,6 @@
 package com.hultron.lifehelper.ui;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.gson.weather.Forecast;
 import com.hultron.lifehelper.gson.weather.Weather;
+import com.hultron.lifehelper.service.AutoUpdateService;
 import com.hultron.lifehelper.uitils.HttpUtil;
 import com.hultron.lifehelper.uitils.ParsingJson;
 import com.hultron.lifehelper.uitils.ShareUtils;
@@ -105,7 +107,11 @@ public class WeatherActivity extends AppCompatActivity {
         if (weatherString != null) {
             //有缓存时直接解析天气数据
             Weather weather = ParsingJson.handleWeatherResponse(weatherString);
-            weatherId = weather.basic.weatherId;
+            if (weather != null) {
+                weatherId = weather.basic.weatherId;
+            } else {
+                weatherId = null;
+            }
             showWeatherInfo(weather);
         } else {
             //无缓存时去服务器查询天气
@@ -156,6 +162,8 @@ public class WeatherActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        Toast.makeText(WeatherActivity.this, "获取天气信息失败",
+                                Toast.LENGTH_SHORT).show();
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 });
@@ -172,18 +180,16 @@ public class WeatherActivity extends AppCompatActivity {
                             ShareUtils.putString(WeatherActivity.this, "weather", responseText);
                             showWeatherInfo(weather);
                         } else {
-                            Toast.makeText(WeatherActivity.this, weather.status, Toast.LENGTH_SHORT)
+                            Toast.makeText(WeatherActivity.this, "天气信息加载失败", Toast.LENGTH_SHORT)
                                     .show();
-                            swipeRefreshLayout.setRefreshing(false);
                         }
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 });
             }
         });
-
         loadBingPic();
     }
-
 
     /*
     * 获取并展示 Weather 实体类中的数据
@@ -201,7 +207,7 @@ public class WeatherActivity extends AppCompatActivity {
 
         forecastLayout.removeAllViews();
 
-        for (Forecast forcast : weather.forecastList) {
+        for (Forecast forecast : weather.forecastList) {
             View view = LayoutInflater.from(this).inflate(R.layout.forcast_item,
                     forecastLayout, false);
 
@@ -210,10 +216,10 @@ public class WeatherActivity extends AppCompatActivity {
             TextView maxText = (TextView) view.findViewById(R.id.max_text);
             TextView minText = (TextView) view.findViewById(R.id.min_text);
 
-            dateText.setText(forcast.date);
-            infoText.setText(forcast.more.info);
-            maxText.setText(forcast.temperature.max);
-            minText.setText(forcast.temperature.min);
+            dateText.setText(forecast.date);
+            infoText.setText(forecast.more.info);
+            maxText.setText(forecast.temperature.max);
+            minText.setText(forecast.temperature.min);
 
             forecastLayout.addView(view);
         }
@@ -223,14 +229,18 @@ public class WeatherActivity extends AppCompatActivity {
             pm25Text.setText(weather.aqi.city.pm25);
         }
 
-        String comfort = "舒适度： " + weather.suggestion.comfort.info;
-        String carWash = "洗车指数： " + weather.suggestion.carWash.info;
-        String sport = "运动建议： " + weather.suggestion.sport.info;
+        if (weather.suggestion != null) {
+            String comfort = "舒适度： " + weather.suggestion.comfort.info;
+            String carWash = "洗车指数： " + weather.suggestion.carWash.info;
+            String sport = "运动建议： " + weather.suggestion.sport.info;
 
-        comfortText.setText(comfort);
-        carWashText.setText(carWash);
-        sportText.setText(sport);
+            comfortText.setText(comfort);
+            carWashText.setText(carWash);
+            sportText.setText(sport);
+        }
 
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
         weatherLayout.setVisibility(View.VISIBLE);
     }
 }

@@ -11,6 +11,7 @@ public class Weather {
 
     public Basic basic;
 
+    @SerializedName("aqi")
     public AQI aqi;
 
     public Now now;

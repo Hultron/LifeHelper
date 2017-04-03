@@ -11,16 +11,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hultron.lifehelper.MainActivity;
-
+import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.entity.MyUser;
 import com.hultron.lifehelper.uitils.ShareUtils;
 import com.hultron.lifehelper.uitils.UtilTools;
 import com.hultron.lifehelper.view.CustomDialog;
-import com.hultron.lifehelper.R;
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpCallback;
+import com.kymjs.rxvolley.http.VolleyError;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -39,6 +46,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private CustomDialog mCustomDialog;
     private TextView appLabel;
+    private ImageView loginBg;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,8 +61,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initView() {
+        loginBg = (ImageView) findViewById(R.id.login_bg);
+        setLoginBackground(loginBg);
         appLabel = (TextView) findViewById(R.id.label);
         UtilTools.setFont(this, appLabel);
+        setAppLabel(appLabel);
         mRegister = (Button) findViewById(R.id.btn_register);
         mRegister.setOnClickListener(this);
         mUserName = (EditText) findViewById(R.id.user_name);
@@ -150,5 +161,49 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             ShareUtils.deleShare(this, "name");
             ShareUtils.deleShare(this, "password");
         }
+    }
+
+    public void setAppLabel(final TextView appLabel) {
+        String cibarDailyUrl = "http://open.iciba.com/dsapi/";
+        RxVolley.get(cibarDailyUrl, new HttpCallback() {
+            @Override
+            public void onSuccess(String t) {
+                super.onSuccess(t);
+                try {
+                    JSONObject jsonObject = new JSONObject(t);
+                    String content = jsonObject.getString("content");
+                    appLabel.setText(content);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(VolleyError error) {
+                super.onFailure(error);
+            }
+        });
+    }
+
+    public void setLoginBackground(final ImageView image) {
+        String backgroungUrl = "http://open.iciba.com/dsapi/";
+        RxVolley.get(backgroungUrl, new HttpCallback() {
+            @Override
+            public void onSuccess(String t) {
+                super.onSuccess(t);
+                try {
+                    JSONObject jsonObject = new JSONObject(t);
+                    String bgImage = jsonObject.getString("picture2");
+                    Picasso.with(LoginActivity.this).load(bgImage).into(image);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(VolleyError error) {
+                super.onFailure(error);
+            }
+        });
     }
 }

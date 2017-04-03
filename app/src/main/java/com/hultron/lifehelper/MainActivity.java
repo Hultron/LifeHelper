@@ -17,21 +17,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.hultron.lifehelper.entity.MyUser;
 import com.hultron.lifehelper.fragment.ButlerFragment;
 import com.hultron.lifehelper.fragment.GirlsFragment;
-import com.hultron.lifehelper.fragment.weatherFragment;
 import com.hultron.lifehelper.fragment.NewsFragment;
-
+import com.hultron.lifehelper.fragment.weatherFragment;
 import com.hultron.lifehelper.ui.AboutSoftwareActivity;
 import com.hultron.lifehelper.ui.CourierActivity;
 import com.hultron.lifehelper.ui.LoginActivity;
 import com.hultron.lifehelper.ui.PhoneActivity;
 import com.hultron.lifehelper.ui.SettingActivity;
 import com.hultron.lifehelper.ui.UserActivity;
-import com.hultron.lifehelper.uitils.UtilTools;
 import com.hultron.lifehelper.ui.WeatherActivity;
+import com.hultron.lifehelper.uitils.UtilTools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements
     private List<String> mTitles;
     //Fragment
     private List<Fragment> mFragments;
+    //每日一句
+    TextView cibarDaily;
 
 
     @Override
@@ -105,7 +107,6 @@ public class MainActivity extends AppCompatActivity implements
 
     //初始化View
     private void initView() {
-
         //DrawerLayout
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);

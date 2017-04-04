@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -70,18 +71,32 @@ public class MainActivity extends AppCompatActivity implements
 
         initData();
         initView();
-
     }
-    
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar, menu);
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
-                break;
+                return true;
+            case R.id.nav_courier:
+                startActivity(new Intent(this, CourierActivity.class));
+                return true;
+            case R.id.nav_phone_loc:
+                startActivity(new Intent(this, PhoneActivity.class));
+                return true;
+            case R.id.nav_weather:
+                startActivity(new Intent(this, WeatherActivity.class));
+                return true;
             default:
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     //初始化数据
@@ -102,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements
     //初始化View
     private void initView() {
         //DrawerLayout
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         navView = (NavigationView) findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
@@ -153,17 +168,8 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.nav_courier:
-                startActivity(new Intent(this, CourierActivity.class));
-                return true;
-            case R.id.nav_phone_loc:
-                startActivity(new Intent(this, PhoneActivity.class));
-                return true;
             case R.id.nav_custom_setting:
                 startActivity(new Intent(this, SettingActivity.class));
-                return true;
-            case R.id.nav_weather:
-                startActivity(new Intent(this, WeatherActivity.class));
                 return true;
             case R.id.nav_exit:
                 AlertDialog dialog = new AlertDialog.Builder(this)

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_courier"
+        android:icon="@drawable/nav_courier"
+        android:title="物流查询"/>
+    <item
+        android:id="@+id/nav_phone_loc"
+        android:icon="@drawable/nav_search"
+        android:title="归属地查询"/>
+    <item
+        android:id="@+id/nav_weather"
+        android:icon="@drawable/nav_weather"
+        android:title="天气查询"/>
+
+</menu>

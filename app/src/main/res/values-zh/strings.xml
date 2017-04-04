@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">智能管家</string>
+    <string name="app_name">生活小助手</string>
     <string name="girls_welfare" translatable="false">美女福利</string>
-    <string name="service_butler">服务管家</string>
+    <string name="chatting_robot">聊天机器人</string>
     <string name="recent_weather">个人中心</string>
     <string name="update_news">新闻时事</string>
     <string name="courier_search">物流查询</string>

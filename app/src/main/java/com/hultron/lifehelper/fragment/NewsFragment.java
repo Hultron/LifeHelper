@@ -61,7 +61,6 @@ public class NewsFragment extends Fragment {
             @Override
             public void onRefresh() {
                 refreshNews();
-                Toast.makeText(getContext(), "刷新成功！", Toast.LENGTH_SHORT).show();
             }
         });
 

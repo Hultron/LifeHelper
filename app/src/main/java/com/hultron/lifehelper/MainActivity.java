@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements
         initView();
 
     }
-
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements
     //初始化数据
     private void initData() {
         mTitles = new ArrayList<>();
-        mTitles.add(getString(R.string.service_butler));
+        mTitles.add(getString(R.string.chatting_robot));
         mTitles.add(getString(R.string.update_news));
         mTitles.add(getString(R.string.girls_welfare));
 
@@ -111,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.titlebar_menu);
-            actionBar.setDisplayShowTitleEnabled(false);
         }
         View headerView = navView.inflateHeaderView(R.layout.nav_header);
         mAvatar = (CircleImageView) headerView.findViewById(R.id.avatar);

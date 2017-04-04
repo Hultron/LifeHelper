@@ -22,7 +22,7 @@
             android:gravity="center"
             android:id="@+id/label"
             android:textSize="20sp"
-            android:text="金山词霸每日一句"
+            android:text="当前无网络，无法刷新每日一句"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

@@ -110,12 +110,12 @@ public class ChatListAdapter extends BaseAdapter {
     }
 
     //左侧文本
-    class LeftViewHolder {
+    private class LeftViewHolder {
         private TextView leftText;
     }
 
     //右侧文本
-    class RightViewHolder {
+    private class RightViewHolder {
         private TextView rightText;
     }
 }

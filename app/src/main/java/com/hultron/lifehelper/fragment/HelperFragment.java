@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ButlerFragment extends Fragment implements View.OnClickListener {
+public class HelperFragment extends Fragment implements View.OnClickListener {
     private ListView mChatListView;
 
     private List<ChatListData> mList = new ArrayList<>();
@@ -48,7 +48,7 @@ public class ButlerFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_butler, container, false);
+        View view = inflater.inflate(R.layout.fragment_helper, container, false);
         findView(view);
         return view;
     }

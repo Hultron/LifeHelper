@@ -30,7 +30,7 @@
                 android:id="@+id/mTabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
+                android:background="#1976D2"
                 app:tabGravity="fill"
                 app:tabIndicatorColor="@color/colorAccent"
                 app:tabMode="fixed"

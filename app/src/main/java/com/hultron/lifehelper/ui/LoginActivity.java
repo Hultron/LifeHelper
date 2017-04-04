@@ -28,6 +28,7 @@ import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.http.VolleyError;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -47,7 +48,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private CheckBox mKeepPass;
 
     private CustomDialog mCustomDialog;
-    private TextView appLabel;
+    public TextView appLabel;
     private ImageView loginBg;
 
     @Override
@@ -62,12 +63,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         initView();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setAppLabel(appLabel);
+    }
+
     private void initView() {
         loginBg = (ImageView) findViewById(R.id.login_bg);
         setLoginBackground(loginBg);
         appLabel = (TextView) findViewById(R.id.label);
-        UtilTools.setFont(this, appLabel);
         setAppLabel(appLabel);
+        UtilTools.setFont(this, appLabel);
         mRegister = (Button) findViewById(R.id.btn_register);
         mRegister.setOnClickListener(this);
         mUserName = (EditText) findViewById(R.id.user_name);
@@ -94,6 +101,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mCustomDialog.setCancelable(false);
 
     }
+
+
 
     @Override
     public void onClick(View v) {
@@ -148,7 +157,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
 
         //保存状态
         ShareUtils.putBoolean(this, "keeppass", mKeepPass.isChecked());
@@ -163,17 +171,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             ShareUtils.deleShare(this, "name");
             ShareUtils.deleShare(this, "password");
         }
+
+        super.onDestroy();
     }
 
     public void setAppLabel(final TextView appLabel) {
-        String cibarDailyUrl = "http://open.iciba.com/dsapi/";
+        String cibarDailyUrl = "https://api.tianapi" +
+                ".com/txapi/dictum/?key=f518734caa0bcf19f8ee1b4c4ede2b65";
         RxVolley.get(cibarDailyUrl, new HttpCallback() {
             @Override
             public void onSuccess(String t) {
                 super.onSuccess(t);
                 try {
                     JSONObject jsonObject = new JSONObject(t);
-                    String content = jsonObject.getString("content");
+                    JSONArray array = jsonObject.getJSONArray("newslist");
+                    JSONObject json = (JSONObject) array.get(0);
+                    String content = json.getString("content");
                     appLabel.setText(content);
                 } catch (JSONException e) {
                     e.printStackTrace();

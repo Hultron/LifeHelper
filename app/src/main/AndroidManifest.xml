@@ -81,7 +81,8 @@
 
         <!--登陆-->
         <activity
-            android:name=".ui.LoginActivity">
+            android:name=".ui.LoginActivity"
+            android:theme="@style/NoActionBarFullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

@@ -162,8 +162,8 @@ public class WeatherActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(WeatherActivity.this, "获取天气信息失败",
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(WeatherActivity.this, "获取天气信息失败，请在左侧导航菜单中选择城市",
+                                Toast.LENGTH_LONG).show();
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 });
@@ -180,8 +180,8 @@ public class WeatherActivity extends AppCompatActivity {
                             ShareUtils.putString(WeatherActivity.this, "weather", responseText);
                             showWeatherInfo(weather);
                         } else {
-                            Toast.makeText(WeatherActivity.this, "天气信息加载失败", Toast.LENGTH_SHORT)
-                                    .show();
+                            Toast.makeText(WeatherActivity.this, "获取天气信息成功",
+                                    Toast.LENGTH_SHORT).show();
                         }
                         swipeRefreshLayout.setRefreshing(false);
                     }

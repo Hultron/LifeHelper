@@ -20,7 +20,7 @@
                 android:id="@+id/profile_image"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
-                android:src="@drawable/add_pic"
+                android:src="@drawable/default_pic"
                 app:civ_border_color="@color/colorPrimary"
                 app:civ_border_width="2dp"/>
 

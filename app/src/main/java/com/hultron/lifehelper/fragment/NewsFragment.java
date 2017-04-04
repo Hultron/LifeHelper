@@ -4,18 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.adapter.NewsAdapter;
 import com.hultron.lifehelper.entity.NewsData;
 import com.hultron.lifehelper.ui.NewsContentActivity;
 import com.hultron.lifehelper.uitils.L;
-import com.hultron.lifehelper.uitils.StaticClass;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 
@@ -36,6 +37,11 @@ public class NewsFragment extends Fragment {
     //新闻地址容器
     private List<String> mListUrl = new ArrayList<>();
 
+    //下拉刷新
+    private SwipeRefreshLayout swipeRefreshNews;
+
+    private NewsAdapter mNewsAdapter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
@@ -49,17 +55,19 @@ public class NewsFragment extends Fragment {
     //初始化View
     private void findView(View view) {
         mNewsList = (ListView) view.findViewById(R.id.list_news);
-
-        //解析接口
-        String newsUrl = "http://api.avatardata" + ".cn/ActNews/Query?key=" +
-                StaticClass.LATELY_NEWS_KEY + "&keyword=美国";
-        RxVolley.get(newsUrl, new HttpCallback() {
+        swipeRefreshNews = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_news);
+        swipeRefreshNews.setColorSchemeResources(R.color.colorAccent);
+        swipeRefreshNews.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onSuccess(String t) {
-                L.e(t);
-                parseJson(t);
+            public void onRefresh() {
+                refreshNews();
+                Toast.makeText(getContext(), "刷新成功！", Toast.LENGTH_SHORT).show();
             }
         });
+
+        requestNews();
+        mNewsAdapter = new NewsAdapter(getActivity(), mNewsDataList);
+        mNewsList.setAdapter(mNewsAdapter);
 
         //为listview设置点击事件
         mNewsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -74,29 +82,46 @@ public class NewsFragment extends Fragment {
         });
     }
 
+    //解析接口
+    private void requestNews() {
+        String newsUrl = "https://api.tianapi" +
+                ".com/world/?key=f518734caa0bcf19f8ee1b4c4ede2b65&num=40";
+        RxVolley.get(newsUrl, new HttpCallback() {
+            @Override
+            public void onSuccess(String t) {
+                L.e(t);
+                parseJson(t);
+            }
+        });
+    }
+
+    private void refreshNews() {
+        requestNews();
+        mNewsAdapter.notifyDataSetChanged();
+        swipeRefreshNews.setRefreshing(false);
+        Toast.makeText(getContext(), "获取最近新闻成功！", Toast.LENGTH_SHORT).show();
+    }
+
     private void parseJson(String t) {
         try {
             JSONObject jsonObject = new JSONObject(t);
-            JSONArray jsonResult = jsonObject.getJSONArray("result");
+            JSONArray jsonResult = jsonObject.getJSONArray("newslist");
             for (int i = 0; i < jsonResult.length(); i++) {
                 JSONObject json = (JSONObject) jsonResult.get(i);
                 NewsData data = new NewsData();
-                if (json.getString("img").equals("")) {
-                    continue;
-                }
-                data.setImgUrl(json.getString("img"));
+                //title
                 String title = json.getString("title");
                 data.setTitle(title);
                 mListTitle.add(title);//将标题存入容器
-                data.setSrc(json.getString("src"));
-                String newsUrl = json.getString("url");
-                data.setNewsUrl(newsUrl);
-                mListUrl.add(newsUrl);//将地址存入容器
+                //url
+                String url = json.getString("url");
+                data.setUrl(url);
+                mListUrl.add(url);//将地址存入容器
+                //time
+                String ctime = json.getString("ctime");
+                data.setCtime(ctime);
                 mNewsDataList.add(data);
             }
-            NewsAdapter adapter = new NewsAdapter(getActivity(), mNewsDataList);
-            mNewsList.setAdapter(adapter);
-
         } catch (JSONException e) {
             e.printStackTrace();
         }

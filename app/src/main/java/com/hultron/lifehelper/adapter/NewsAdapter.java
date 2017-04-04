@@ -6,12 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.entity.NewsData;
-import com.hultron.lifehelper.entity.PicassoUtils;
 
 import java.util.List;
 
@@ -55,29 +53,25 @@ public class NewsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = mLayoutInflater.inflate(R.layout.news_item, parent, false);
-            holder.mImgNewsImage = (ImageView) convertView.findViewById(R.id.iv_news_image);
             holder.mTxtTitle = (TextView) convertView.findViewById(R.id.tv_title);
-            holder.mTxtSrc = (TextView) convertView.findViewById(R.id.tv_src);
+            holder.mTxtTime = (TextView) convertView.findViewById(R.id.tv_time);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         mNewsData = mNewsDataList.get(position);
         holder.mTxtTitle.setText(mNewsData.getTitle());
-        holder.mTxtSrc.setText(mNewsData.getSrc());
-        //加载图片
-        PicassoUtils.loadImageViewSize(mContext, mNewsData.getImgUrl(), width / 3, 200, holder
-                .mImgNewsImage);
+        holder.mTxtTime.setText(mNewsData.getCtime());
+
         return convertView;
     }
 
     private class ViewHolder {
-        private ImageView mImgNewsImage;
         private TextView mTxtTitle;
-        private TextView mTxtSrc;
+        private TextView mTxtTime;
     }
 }

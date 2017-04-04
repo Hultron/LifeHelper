@@ -3,5 +3,5 @@
     <string name="girls_welfare" translatable="false">Girls</string>
     <string name="service_butler">ServiceButler</string>
     <string name="recent_weather">UserCenter</string>
-    <string name="wechat_news">WechatNews</string>
+    <string name="update_news">WechatNews</string>
 </resources>

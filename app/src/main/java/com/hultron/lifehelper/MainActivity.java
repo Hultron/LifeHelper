@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements
     private void initData() {
         mTitles = new ArrayList<>();
         mTitles.add(getString(R.string.service_butler));
-        mTitles.add(getString(R.string.wechat_news));
+        mTitles.add(getString(R.string.update_news));
         mTitles.add(getString(R.string.girls_welfare));
 
         mFragments = new ArrayList<>();

@@ -7,12 +7,20 @@ package com.hultron.lifehelper.entity;
 public class NewsData {
     //标题
     private String title;
-    //来源
-    private String src;
-    //图片的url
-    private String imgUrl;
+
+    public String getCtime() {
+        return ctime;
+    }
+
+    public void setCtime(String ctime) {
+        this.ctime = ctime;
+    }
+
+    //新闻时间
+    private String ctime;
+
     //新闻地址
-    private String newsUrl;
+    private String url;
 
     public String getTitle() {
         return title;
@@ -22,27 +30,13 @@ public class NewsData {
         this.title = title;
     }
 
-    public String getSrc() {
-        return src;
+
+
+    public String getUrl() {
+        return url;
     }
 
-    public void setSrc(String src) {
-        this.src = src;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
-    public String getNewsUrl() {
-        return newsUrl;
-    }
-
-    public void setNewsUrl(String newsUrl) {
-        this.newsUrl = newsUrl;
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

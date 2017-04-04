@@ -23,16 +23,9 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
-<<<<<<< HEAD:app/src/main/java/com/hultron/lifehelper/ui/LocationActivity.java
 import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.application.BaseApplication;
 import com.hultron.lifehelper.uitils.L;
-=======
-import com.hultron.lifehelper.application.BaseApplication;
-import com.hultron.lifehelper.uitils.L;
-import com.hultron.lifehelper.R;
->>>>>>> secondweather:app/src/main/java/com/hultron/lifehelper/ui/LocationActivity.java
-
 import java.util.ArrayList;
 import java.util.List;
 

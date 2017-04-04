@@ -5,10 +5,20 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <GridView
-        android:id="@+id/grid_girl"
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_girls"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="2"/>
+        android:layout_height="match_parent">
+
+        <GridView
+            android:id="@+id/grid_girl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="2"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>
+
+

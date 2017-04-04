@@ -25,8 +25,7 @@ public class StaticClass {
     public static final String LATELY_NEWS_KEY = "83f5a2a74c2443b7a2da354c43027197";
 
     //美女社区api
-    public static final String GANK_GIRL_URL = "http://gank" +
-            ".io/api/search/query/listview/category/%E7%A6%8F%E5%88%A9/count/50/page/1";
+    public static final String GANK_GIRL_URL = "http://gank.io/api/data/%E7%A6%8F%E5%88%A9/50/1";
 
     //语音key
     public static final String VOICE_KEY = "58ca6039";

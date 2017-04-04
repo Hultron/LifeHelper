@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">SmartBulter</string>
-    <string name="girls_community" translatable="false">Girls</string>
+    <string name="girls_welfare" translatable="false">Girls</string>
     <string name="service_butler">ServiceButler</string>
     <string name="recent_weather">UserCenter</string>
     <string name="wechat_news">WechatNews</string>

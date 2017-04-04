@@ -35,10 +35,10 @@
 
 
     <!--百度地图所需权限，已删除重复部分-->
-    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
 
     <!-- 这个权限用于进行网络定位-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -57,7 +57,10 @@
 
 
         <!--主页-->
-        <activity android:name="com.hultron.lifehelper.MainActivity"/>
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/MainActivityNoActionBar">
+        </activity>
 
 
         <!--设置-->
@@ -69,10 +72,6 @@
         <activity
             android:name="com.hultron.lifehelper.ui.SplashActivity"
             android:theme="@style/NoActionBarFullScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
 
         <!--引导页-->
@@ -82,9 +81,11 @@
 
         <!--登陆-->
         <activity
-            android:name="com.hultron.lifehelper.ui.LoginActivity"
-            android:label="@string/login">
-
+            android:name=".ui.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
 
         <!--注册-->
@@ -107,6 +108,12 @@
             android:name="com.hultron.lifehelper.ui.PhoneActivity"
             android:label="归属地查询"/>
 
+        <!--天气查询-->
+        <activity
+            android:name=".ui.WeatherActivity"
+            android:label="天气查询"
+            android:theme="@style/WeatherScreen"/>
+
         <!--新闻详情-->
         <activity android:name="com.hultron.lifehelper.ui.NewsContentActivity"/>
 
@@ -119,22 +126,29 @@
             android:label="我的二维码"/>
 
         <!--我的位置-->
-        <activity android:name="com.hultron.lifehelper.ui.LocationActivity"
-                  android:label="我的位置"/>
+        <activity
+            android:name=".ui.LocationActivity"
+            android:label="我的位置"/>
 
         <!--关于软件-->
-        <activity android:name="com.hultron.lifehelper.ui.AboutSoftwareActivity"
+        <activity
+            android:name=".ui.AboutSoftwareActivity"
             android:label="关于软件"/>
+
+        <!--个人中心-->
+        <activity
+            android:name=".ui.UserActivity"
+            android:label="个人中心"/>
 
         <!--短信服务-->
         <service android:name="com.hultron.lifehelper.service.SmsService"/>
 
         <!--定位服务-->
-        <service android:name="com.baidu.location.f"
-                 android:enabled="true"
-                 android:process=":remote">
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote">
         </service>
-
 
 
         <provider

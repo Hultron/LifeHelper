@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import com.hultron.lifehelper.MainActivity;
 import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.uitils.L;
-
 import java.util.ArrayList;
 import java.util.List;
 

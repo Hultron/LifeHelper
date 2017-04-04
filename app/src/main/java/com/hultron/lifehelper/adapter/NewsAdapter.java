@@ -13,7 +13,6 @@ import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.entity.NewsData;
 import com.hultron.lifehelper.entity.PicassoUtils;
 
-
 import java.util.List;
 
 /**

@@ -8,11 +8,17 @@ import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+<<<<<<< HEAD:app/src/main/java/com/hultron/lifehelper/adapter/GirlAdapter.java
 import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.entity.GirlData;
 import com.hultron.lifehelper.entity.PicassoUtils;
+=======
+import com.hultron.lifehelper.entity.GirlData;
+import com.hultron.lifehelper.R;
+>>>>>>> secondweather:app/src/main/java/com/hultron/lifehelper/adapter/GirlAdapter.java
 
 import java.util.List;
+
 
 /**
  * 妹子Adapter
@@ -56,7 +62,7 @@ public class GirlAdapter extends BaseAdapter {
         ViewHolder holder = null;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.girl_item, parent, false);
+            convertView = mInflater.inflate(R.layout.left_item, parent, false);
             holder.girlImage = (ImageView) convertView.findViewById(R.id.girl_item);
             convertView.setTag(holder);
         } else {
@@ -65,7 +71,7 @@ public class GirlAdapter extends BaseAdapter {
         mData = mGirlDataList.get(position);
         //解析图片
         String url = mData.getImgUrl();
-        PicassoUtils.loadImageViewSize(mContext, url, width/2, 250, holder.girlImage);
+        //PicassoUtils.loadImageViewSize(mContext, url, width/2, 250, holder.girlImage);
         return convertView;
     }
 

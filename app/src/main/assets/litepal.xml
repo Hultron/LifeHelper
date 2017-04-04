@@ -1,0 +1,11 @@
+<litepal>
+    <dbname value="helper_weather_part"/>
+
+    <version value="1"/>
+
+    <list>
+        <mapping class="com.hultron.lifehelper.database.Province"/>
+        <mapping class="com.hultron.lifehelper.database.City"/>
+        <mapping class="com.hultron.lifehelper.database.County"/>
+    </list>
+</litepal>

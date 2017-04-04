@@ -46,7 +46,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     //短信提醒
     private Switch mSwSms;
     //6.0及以上系统申请SYSTEM_ALERT_WINDOW权限码
-    public static int OVERLAY_PERMISSION_REQ_CODE = 1234;
+    private static int OVERLAY_PERMISSION_REQ_CODE = 1234;
     //检测更新
     private LinearLayout mUpdate;
     private TextView mTvVersion;
@@ -113,10 +113,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         mMyLocation = (LinearLayout) findViewById(R.id.my_location);
         mMyLocation.setOnClickListener(this);
 
-        //关于软件
-        mAboutSoftware = (LinearLayout) findViewById(R.id.about_software);
-        mAboutSoftware.setOnClickListener(this);
-
     }
     @Override
     public void onClick(View v) {
@@ -172,9 +168,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.my_location:
                 startActivity(new Intent(this, LocationActivity.class));
-                break;
-            case R.id.about_software:
-                startActivity(new Intent(this, AboutSoftwareActivity.class));
                 break;
         }
     }
@@ -261,15 +254,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             stopService(new Intent(this, SmsService.class));
         }
     }
-
     @TargetApi(Build.VERSION_CODES.M)
-    public void requestDrawOverLays() {
+    private void requestDrawOverLays() {
         if (!Settings.canDrawOverlays(SettingActivity.this)) {
-            Toast.makeText(this, "请到设置页面手动开启权限，允许本应用在其他应用界面之上打开",
-                    Toast.LENGTH_SHORT).show();
+
             AlertDialog dialog = new AlertDialog.Builder(SettingActivity.this)
                     .setTitle("需要您手动授予权限")
-                    .setMessage("请授予权限")
+                    .setMessage("点击 OK 进入设置页面手动开启权限，允许本应用在其他应用界面之上打开")
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {

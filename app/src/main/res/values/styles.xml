@@ -8,6 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--主页主题-->
+    <style name="MainActivityNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
     <!--全屏主题-->
     <style name="NoActionBarFullScreen" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowNoTitle">true</item>
@@ -15,6 +23,9 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
+
+    <!--天气界面主题-->
+    <style name="WeatherScreen" parent="Theme.AppCompat.Light.NoActionBar"/>
 
     <!--自定义Dialog动画-->
     <style name="pop_anim_style">

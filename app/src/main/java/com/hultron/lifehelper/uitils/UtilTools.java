@@ -35,7 +35,6 @@ public class UtilTools {
         String imageString = new String(Base64.encode(byteArray, Base64.DEFAULT));
         //第三步：将String保存到ShareUtils
         ShareUtils.putString(context, "image_title", imageString);
-
     }
 
     //从ShareUtils获取图片
@@ -54,7 +53,7 @@ public class UtilTools {
 
     //获取版本号
     public static String getVersion(Context context) {
-        PackageManager pm =  context.getPackageManager();
+        PackageManager pm = context.getPackageManager();
         try {
             PackageInfo info = pm.getPackageInfo(context.getPackageName(), 0);
             return info.versionName;

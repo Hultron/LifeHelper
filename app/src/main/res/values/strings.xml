@@ -3,7 +3,7 @@
     <string name="service_butler">服务管家</string>
     <string name="wechat_news">微信精选</string>
     <string name="girls_community">美女社区</string>
-    <string name="user_center">个人中心</string>
+    <string name="recent_weather">最近天气</string>
     <string name="text_setting">设置</string>
     <string name="into_home">进入主页</string>
     <string name="user_name">用户名</string>
@@ -32,5 +32,7 @@
     <string name="sex">性别：</string>
     <string name="confirm_modi">确定修改</string>
     <string name="n"/>
+    <string name="location_search">归属地查询</string>
+    <string name="exit">退出登陆</string>
 
 </resources>

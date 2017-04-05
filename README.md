@@ -19,7 +19,17 @@
 在左侧导航菜单可以编辑个人资料，查看软件信息，退出登陆；
 
 
+# 计划
+
+随着个人技术的进步，这个项目我还会不断完善；目前考虑添加的功能有：股票信息查询，聊天界面个人头像，添加好友。
+
+# 致谢
+
+谢谢你来到这里，欢迎您对该项目提供意见和建议。
+
 # 项目截图
+
+> 我在本地写好的图片排版是三个一行，不知怎的，同步到 github 就变成一行一个了。
 
 <figure class="third">
 <img src="https://raw.githubusercontent.com/Hultron/LifeHelper/master/app/projectcapture/%E8%81%8A%E5%A4%A9%E6%9C%BA%E5%99%A8%E4%BA%BA.png" width="300" title="聊天机器人"><img src="https://raw.githubusercontent.com/Hultron/LifeHelper/master/app/projectcapture/%E6%96%B0%E9%97%BB%E6%97%B6%E4%BA%8B.png" width="300" title="新闻时事"><img src="https://raw.githubusercontent.com/Hultron/LifeHelper/master/app/projectcapture/%E7%BE%8E%E5%A5%B3%E7%A6%8F%E5%88%A9.png" width="300" title="美女福利">
@@ -40,11 +50,3 @@
 <figure class="third">
    <img src="https://raw.githubusercontent.com/Hultron/LifeHelper/master/app/projectcapture/%E5%BD%92%E5%B1%9E%E5%9C%B0%E6%9F%A5%E8%AF%A2.png" width="300" title="归属地查询"><img src="https://raw.githubusercontent.com/Hultron/LifeHelper/master/app/projectcapture/%E7%89%A9%E6%B5%81%E6%9F%A5%E8%AF%A2.png" width="300" title="物流查询">
 </figure>
-
-# 计划
-
-随着个人技术的进步，这个项目我还会不断完善；目前考虑添加的功能有：股票信息查询，聊天界面个人头像，添加好友。
-
-# 最后
-
-谢谢你看到这里，欢迎提供意见和建议。

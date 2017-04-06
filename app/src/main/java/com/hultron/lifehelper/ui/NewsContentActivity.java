@@ -12,7 +12,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.hultron.lifehelper.R;
-import com.hultron.lifehelper.uitils.L;
+import com.hultron.lifehelper.uitils.LogUtil;
 /**
  * 新闻详情
  */
@@ -41,7 +41,7 @@ public class NewsContentActivity extends BaseActivity {
         //设置标题
         Log.e("title", title);
         getSupportActionBar().setTitle(title);
-        L.e(url);
+        LogUtil.e(url);
 
         //进行加载网页的逻辑
         //支持javascript

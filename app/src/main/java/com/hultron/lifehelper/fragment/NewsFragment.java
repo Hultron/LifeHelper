@@ -16,7 +16,7 @@ import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.adapter.NewsAdapter;
 import com.hultron.lifehelper.entity.NewsData;
 import com.hultron.lifehelper.ui.NewsContentActivity;
-import com.hultron.lifehelper.uitils.L;
+import com.hultron.lifehelper.uitils.LogUtil;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 
@@ -88,7 +88,7 @@ public class NewsFragment extends Fragment {
         RxVolley.get(newsUrl, new HttpCallback() {
             @Override
             public void onSuccess(String t) {
-                L.e(t);
+                LogUtil.e(t);
                 parseJson(t);
             }
         });

@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.hultron.lifehelper.MainActivity;
 import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.entity.MyUser;
-import com.hultron.lifehelper.uitils.ShareUtils;
+import com.hultron.lifehelper.uitils.ShareUtil;
 import com.hultron.lifehelper.view.CustomDialog;
 
 import com.hultron.lifehelper.uitils.UtilTools;
@@ -86,12 +86,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mForgetPassword.setOnClickListener(this);
 
         //设置选中状态
-        boolean isChecked = ShareUtils.getBoolean(this, "keeppass", false);
+        boolean isChecked = ShareUtil.getBoolean(this, "keeppass", false);
         mKeepPass.setChecked(isChecked);
         if (isChecked) {
             //显示用户名和密码
-            mUserName.setText(ShareUtils.getString(this, "name", ""));
-            mPassword.setText(ShareUtils.getString(this, "password", ""));
+            mUserName.setText(ShareUtil.getString(this, "name", ""));
+            mPassword.setText(ShareUtil.getString(this, "password", ""));
         }
 
         mCustomDialog = new CustomDialog(this, 200, 200, R.layout.dialog_loading, R.style
@@ -159,17 +159,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onDestroy() {
 
         //保存状态
-        ShareUtils.putBoolean(this, "keeppass", mKeepPass.isChecked());
+        ShareUtil.putBoolean(this, "keeppass", mKeepPass.isChecked());
 
         //是否记住密码
         if (mKeepPass.isChecked()) {
             //记住密码
-            ShareUtils.putString(this, "name", mUserName.getText().toString().trim());
-            ShareUtils.putString(this, "password", mPassword.getText().toString().trim());
+            ShareUtil.putString(this, "name", mUserName.getText().toString().trim());
+            ShareUtil.putString(this, "password", mPassword.getText().toString().trim());
         } else {
             //清除密码
-            ShareUtils.deleShare(this, "name");
-            ShareUtils.deleShare(this, "password");
+            ShareUtil.deleShare(this, "name");
+            ShareUtil.deleShare(this, "password");
         }
 
         super.onDestroy();

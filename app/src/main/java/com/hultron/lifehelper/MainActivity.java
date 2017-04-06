@@ -42,8 +42,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
-    private static final String TAG = "MainActivity";
-    private static final int REQUEST_CODE_WRITE_SETTINGS = 0;
     /*
     * DrawerLayout
     * */
@@ -52,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements
     NavigationView navView;
     //圆形头像
     CircleImageView mAvatar;
+
     //TabLayout
     TabLayout mTabLayout;
     //ViewPager
@@ -133,12 +132,11 @@ public class MainActivity extends AppCompatActivity implements
         mAvatar.setOnClickListener(this);
 
         //TabLayout
-        mTabLayout = (TabLayout) findViewById(R.id.mTabLayout);
-        mViewPager = (ViewPager) findViewById(R.id.mViewPager);
+        mTabLayout = (TabLayout) findViewById(R.id.main_tab_layout);
+        mViewPager = (ViewPager) findViewById(R.id.main_view_pager);
 
         //预加载
         mViewPager.setOffscreenPageLimit(mFragments.size());
-
         //设置适配器
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
 

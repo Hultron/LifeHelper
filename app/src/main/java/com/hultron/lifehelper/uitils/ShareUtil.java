@@ -7,10 +7,13 @@ package com.hultron.lifehelper.uitils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class ShareUtils {
+public class ShareUtil {
 
     public static final String NAME = "config";
 
+    /*
+    * String getter/setter
+    * */
     public static void putString(Context context, String key, String value) {
         SharedPreferences.Editor editor = context.getSharedPreferences(NAME, Context
                 .MODE_PRIVATE).edit();
@@ -23,6 +26,9 @@ public class ShareUtils {
         return sp.getString(key, defValue);
     }
 
+    /*
+    * int getter/setter
+    * */
     public static void putInt(Context context, String key, int value) {
         SharedPreferences.Editor editor = context.getSharedPreferences(NAME, Context
                 .MODE_PRIVATE).edit();
@@ -35,6 +41,9 @@ public class ShareUtils {
         return sp.getInt(key, defValue);
     }
 
+    /*
+    * boolean getter/setter
+    * */
     public static void putBoolean(Context context, String key, boolean value) {
         SharedPreferences.Editor editor = context.getSharedPreferences(NAME, Context
                 .MODE_PRIVATE).edit();

@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.widget.LinearLayout;
 
-import com.hultron.lifehelper.uitils.L;
+import com.hultron.lifehelper.uitils.LogUtil;
 
 /**
  * 事件分发
@@ -47,7 +47,7 @@ public class DispatchLinearLayout extends LinearLayout {
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         //如果不为空，说明调用了 去获取事件
-        L.i("hahahahah");
+        LogUtil.i("hahahahah");
         if (mDispatchKeyEventListener != null) {
             return mDispatchKeyEventListener.dispatchKeyEvent(event);
         }

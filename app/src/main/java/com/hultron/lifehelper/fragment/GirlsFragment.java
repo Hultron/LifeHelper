@@ -18,7 +18,7 @@ import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.adapter.GirlAdapter;
 import com.hultron.lifehelper.application.BaseApplication;
 import com.hultron.lifehelper.entity.GirlData;
-import com.hultron.lifehelper.uitils.L;
+import com.hultron.lifehelper.uitils.LogUtil;
 import com.hultron.lifehelper.uitils.PicassoUtils;
 import com.hultron.lifehelper.uitils.StaticClass;
 import com.hultron.lifehelper.view.CustomDialog;
@@ -83,7 +83,7 @@ public class GirlsFragment extends Fragment {
         RxVolley.get(StaticClass.GANK_GIRL_URL, new HttpCallback() {
             @Override
             public void onSuccess(String t) {
-                L.i(t);
+                LogUtil.i(t);
                 parseJson(t);
                 mGirlAdapter = new GirlAdapter(BaseApplication.getContext(), mGirlDataList);
                 mGridViewGirl.setAdapter(mGirlAdapter);//设置适配器
@@ -149,7 +149,7 @@ public class GirlsFragment extends Fragment {
         RxVolley.get(gankUrl, new HttpCallback() {
             @Override
             public void onSuccess(String t) {
-                L.i(t);
+                LogUtil.i(t);
                 Toast.makeText(getContext(), "刷新成功！老司机，保重身体啊！", Toast.LENGTH_SHORT).show();
                 parseJson(t);
                 mGirlAdapter.notifyDataSetChanged();

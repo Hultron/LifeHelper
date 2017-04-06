@@ -25,7 +25,7 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.application.BaseApplication;
-import com.hultron.lifehelper.uitils.L;
+import com.hultron.lifehelper.uitils.LogUtil;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,7 +109,7 @@ public class LocationActivity extends BaseActivity {
     //开始定位
     private void requestLocation() {
         mLocationClient.start();
-        L.e("开始定位");
+        LogUtil.e("开始定位");
     }
 
     @Override
@@ -261,9 +261,9 @@ public class LocationActivity extends BaseActivity {
             }
 
             //定位结果
-            L.i(locResult.toString());
+            LogUtil.i(locResult.toString());
             //结束定位
-            L.e("结束定位");
+            LogUtil.e("结束定位");
             //mLocationClient.stop();
             //移动到我的位置
             //设置缩放，确保我在屏幕内

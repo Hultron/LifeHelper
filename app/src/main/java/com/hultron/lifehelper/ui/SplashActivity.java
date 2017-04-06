@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.hultron.lifehelper.R;
-import com.hultron.lifehelper.uitils.ShareUtils;
+import com.hultron.lifehelper.uitils.ShareUtil;
 import com.hultron.lifehelper.uitils.StaticClass;
 import com.hultron.lifehelper.uitils.UtilTools;
 
@@ -68,9 +68,9 @@ public class SplashActivity extends AppCompatActivity {
 
     //判断程序是否第一次运行
     private boolean isFirst() {
-        boolean isFirst = ShareUtils.getBoolean(this, StaticClass.SHARE_IS_FIRST, true);
+        boolean isFirst = ShareUtil.getBoolean(this, StaticClass.SHARE_IS_FIRST, true);
         if (isFirst) {
-            ShareUtils.putBoolean(this, StaticClass.SHARE_IS_FIRST, false);
+            ShareUtil.putBoolean(this, StaticClass.SHARE_IS_FIRST, false);
             //是第一次运行
             return true;
         } else {

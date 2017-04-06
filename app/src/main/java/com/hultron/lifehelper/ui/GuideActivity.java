@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import com.hultron.lifehelper.MainActivity;
 import com.hultron.lifehelper.R;
-import com.hultron.lifehelper.uitils.L;
+import com.hultron.lifehelper.uitils.LogUtil;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +70,7 @@ public class GuideActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onPageSelected(int position) {
-                L.i("position: " + position);
+                LogUtil.i("position: " + position);
                 switch (position) {
                     case 0:
                         setPointImg(true, false, false);

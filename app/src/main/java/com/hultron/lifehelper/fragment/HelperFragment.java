@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -43,6 +44,8 @@ public class HelperFragment extends Fragment implements View.OnClickListener {
     private EditText mEdtChat;
     //发送按钮
     private Button mBtnSend;
+    //生活小助手
+    private LinearLayout lifeHelper;
 
     @Nullable
     @Override
@@ -72,11 +75,13 @@ public class HelperFragment extends Fragment implements View.OnClickListener {
         mBtnSend = (Button) v.findViewById(R.id.btn_send);
         mBtnSend.setOnClickListener(this);
 
+        lifeHelper = (LinearLayout) v.findViewById(R.id.life_helper);
+
         //设置适配器
         adapter = new ChatListAdapter(getActivity(), mList);
         mChatListView.setAdapter(adapter);
 
-        addLeftItem("你好，我是贾维斯！");
+        addLeftItem("你好，我是图灵机器人！");
     }
 
     @Override
@@ -109,9 +114,10 @@ public class HelperFragment extends Fragment implements View.OnClickListener {
                         //5.添加你的输入内容到right_item
                         addRightItem(mChatContent);
                         //6.发送给机器人请求返回内容
-                        String mUrlChat = "http://api.qingyunke.com/api" +
-                                ".php?key=free&appid=0&msg=" + mChatContent;
-                        RxVolley.get(mUrlChat, new HttpCallback() {
+                        String turingChat = "http://www.tuling123" +
+                                ".com/openapi/api?key=5aba7dbdaeb54edbbf8e33419ed5e611&info=" +
+                                mChatContent;
+                        RxVolley.get(turingChat, new HttpCallback() {
                             @Override
                             public void onSuccess(String t) {
                                 L.i(t);
@@ -132,7 +138,7 @@ public class HelperFragment extends Fragment implements View.OnClickListener {
         try {
             JSONObject jsonResult = new JSONObject(t);
             //拿到返回值
-            String content = jsonResult.getString("content");
+            String content = jsonResult.getString("text");
             //7.将返回值添加到leftitem
             addLeftItem(content);
         } catch (JSONException e) {

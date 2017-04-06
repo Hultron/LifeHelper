@@ -72,6 +72,10 @@
         <activity
             android:name="com.hultron.lifehelper.ui.SplashActivity"
             android:theme="@style/NoActionBarFullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
 
         <!--引导页-->
@@ -83,10 +87,6 @@
         <activity
             android:name=".ui.LoginActivity"
             android:theme="@style/NoActionBarFullScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
 
         <!--注册-->

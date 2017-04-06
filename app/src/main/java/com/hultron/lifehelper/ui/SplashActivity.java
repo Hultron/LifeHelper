@@ -6,12 +6,20 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.uitils.ShareUtil;
 import com.hultron.lifehelper.uitils.StaticClass;
 import com.hultron.lifehelper.uitils.UtilTools;
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpCallback;
+import com.kymjs.rxvolley.http.VolleyError;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * 闪屏页
@@ -19,7 +27,8 @@ import com.hultron.lifehelper.uitils.UtilTools;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private TextView mTvSplash;
+    TextView mTvSplash;
+    ImageView mSplashBg;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -50,19 +59,17 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        
+
         initView();
     }
 
     private void initView() {
-        //延时2s
+        mSplashBg = (ImageView)findViewById(R.id.splash_bg);
+        UtilTools.setBackground(this, mSplashBg);
+        //延时2000ms
         mHandler.sendEmptyMessageDelayed(StaticClass.HANDLER_SPLASH, 2000);
 
         mTvSplash = (TextView) findViewById(R.id.tv_splash);
-
-//        //设置字体
-//        Typeface fontType = Typeface.createFromAsset(getAssets(), "fonts/FONT.TTF");
-//        mTvSplash.setTypeface(fontType);
         UtilTools.setFont(this, mTvSplash);
     }
 
@@ -82,7 +89,29 @@ public class SplashActivity extends AppCompatActivity {
     //禁止返回键
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
+        //        super.onBackPressed();
 
+    }
+
+    public void setSplashBackground(final ImageView image) {
+        String backgroungUrl = "http://open.iciba.com/dsapi/";
+        RxVolley.get(backgroungUrl, new HttpCallback() {
+            @Override
+            public void onSuccess(String t) {
+                super.onSuccess(t);
+                try {
+                    JSONObject jsonObject = new JSONObject(t);
+                    String bgImage = jsonObject.getString("picture2");
+                    Picasso.with(SplashActivity.this).load(bgImage).into(image);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(VolleyError error) {
+                super.onFailure(error);
+            }
+        });
     }
 }

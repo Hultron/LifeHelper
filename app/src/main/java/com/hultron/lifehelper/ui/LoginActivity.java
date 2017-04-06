@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,14 +18,12 @@ import com.hultron.lifehelper.MainActivity;
 import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.entity.MyUser;
 import com.hultron.lifehelper.uitils.ShareUtil;
-import com.hultron.lifehelper.view.CustomDialog;
-
+import com.hultron.lifehelper.uitils.StaticClass;
 import com.hultron.lifehelper.uitils.UtilTools;
-
+import com.hultron.lifehelper.view.CustomDialog;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.http.VolleyError;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,15 +38,14 @@ import cn.bmob.v3.listener.SaveListener;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button mRegister;
-    private Button mLogin;
+    Button mRegister;
+    Button mLogin;
     private EditText mUserName, mPassword;
-    private TextView mForgetPassword;
+    TextView mForgetPassword;
     private CheckBox mKeepPass;
 
     private CustomDialog mCustomDialog;
     public TextView appLabel;
-    private ImageView loginBg;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,18 +59,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         initView();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        setAppLabel(appLabel);
-    }
 
     private void initView() {
-        loginBg = (ImageView) findViewById(R.id.login_bg);
-        setLoginBackground(loginBg);
         appLabel = (TextView) findViewById(R.id.label);
-        setAppLabel(appLabel);
         UtilTools.setFont(this, appLabel);
+        setAppLabel(appLabel);
         mRegister = (Button) findViewById(R.id.btn_register);
         mRegister.setOnClickListener(this);
         mUserName = (EditText) findViewById(R.id.user_name);
@@ -86,7 +75,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mForgetPassword.setOnClickListener(this);
 
         //设置选中状态
-        boolean isChecked = ShareUtil.getBoolean(this, "keeppass", false);
+        boolean isChecked = ShareUtil.getBoolean(this, StaticClass.KEEP_PASS, false);
         mKeepPass.setChecked(isChecked);
         if (isChecked) {
             //显示用户名和密码
@@ -171,11 +160,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             ShareUtil.deleShare(this, "name");
             ShareUtil.deleShare(this, "password");
         }
-
         super.onDestroy();
     }
 
-    public void setAppLabel(final TextView appLabel) {
+    private void setAppLabel(final TextView appLabel) {
         String cibarDailyUrl = "https://api.tianapi" +
                 ".com/txapi/dictum/?key=f518734caa0bcf19f8ee1b4c4ede2b65";
         RxVolley.get(cibarDailyUrl, new HttpCallback() {
@@ -200,25 +188,4 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    public void setLoginBackground(final ImageView image) {
-        String backgroungUrl = "http://open.iciba.com/dsapi/";
-        RxVolley.get(backgroungUrl, new HttpCallback() {
-            @Override
-            public void onSuccess(String t) {
-                super.onSuccess(t);
-                try {
-                    JSONObject jsonObject = new JSONObject(t);
-                    String bgImage = jsonObject.getString("picture2");
-                    Picasso.with(LoginActivity.this).load(bgImage).into(image);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(VolleyError error) {
-                super.onFailure(error);
-            }
-        });
-    }
 }

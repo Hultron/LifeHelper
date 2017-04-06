@@ -155,6 +155,13 @@ public class WeatherActivity extends AppCompatActivity {
     public void requestWeather(final String weatherId) {
         String weatherUrl = "http://guolin.tech/api/weather?cityid=" + weatherId +
                 "&key=edcc301174514a5e811431c763457862";
+        if (weatherId == null) {
+            Toast.makeText(WeatherActivity.this,
+                    "当前没有选择城市，无法查询天气，请在左侧导航菜单中选择城市",
+                    Toast.LENGTH_LONG).show();
+            drawerLayout.openDrawer(GravityCompat.START);
+            return;
+        }
         HttpUtil.sendOkHttpRequest(weatherUrl, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -162,7 +169,8 @@ public class WeatherActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(WeatherActivity.this, "获取天气信息失败，请在左侧导航菜单中选择城市",
+                        Toast.makeText(WeatherActivity.this,
+                                "获取天气信息失败，请在左侧导航菜单中选择城市",
                                 Toast.LENGTH_LONG).show();
                         swipeRefreshLayout.setRefreshing(false);
                     }

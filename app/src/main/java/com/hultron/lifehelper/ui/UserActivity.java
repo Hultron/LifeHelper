@@ -1,7 +1,10 @@
 package com.hultron.lifehelper.ui;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -170,6 +173,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
                 mDialog.show();
                 break;
             case R.id.btn_camera:
+
                 performRequestPermissions("您必须授予应用相机权限，否则无法拍照",
                         new String[]{Manifest.permission.CAMERA},
                         CAMERA, new PermissionsResultListener() {
@@ -204,6 +208,25 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
         startActivityForResult(intent, CHOOSE_PHOTO);
     }
 
+
+    public boolean hasPermissionInManifest(Context context, String permissionName) {
+        final String packageName = context.getPackageName();
+        try {
+            final PackageInfo packageInfo = context.getPackageManager()
+                    .getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
+            final String[] declaredPermisisons = packageInfo.requestedPermissions;
+            if (declaredPermisisons != null && declaredPermisisons.length > 0) {
+                for (String p : declaredPermisisons) {
+                    if (p.equals(permissionName)) {
+                        return true;
+                    }
+                }
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        }
+        return false;
+    }
 
     //打开相机
     private void openCamera() {

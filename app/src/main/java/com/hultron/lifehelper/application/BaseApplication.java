@@ -16,7 +16,7 @@ import cn.bmob.v3.Bmob;
 
 public class BaseApplication extends Application {
 
-    private static Context mContext;
+    public static Context mContext;
 
     @Override
     public void onCreate() {
@@ -38,7 +38,7 @@ public class BaseApplication extends Application {
         SDKInitializer.initialize(getApplicationContext());
 
         //初始化litepal
-        LitePalApplication.initialize(mContext);
+        LitePalApplication.initialize(getApplicationContext());
     }
 
     public static Context getContext() {

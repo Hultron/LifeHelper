@@ -12,19 +12,20 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/guide_strong"/>
 
         <TextView
+            android:id="@+id/guide_strong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Three"
-            android:textSize="30sp"/>
+            android:text="强大"
+            android:textSize="20sp"/>
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_start"
+        android:id="@+id/btn_enter_home_page"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

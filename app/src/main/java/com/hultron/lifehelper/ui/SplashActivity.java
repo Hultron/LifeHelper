@@ -13,13 +13,6 @@ import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.uitils.ShareUtil;
 import com.hultron.lifehelper.uitils.StaticClass;
 import com.hultron.lifehelper.uitils.UtilTools;
-import com.kymjs.rxvolley.RxVolley;
-import com.kymjs.rxvolley.client.HttpCallback;
-import com.kymjs.rxvolley.http.VolleyError;
-import com.squareup.picasso.Picasso;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * 闪屏页
@@ -66,8 +59,8 @@ public class SplashActivity extends AppCompatActivity {
     private void initView() {
         mSplashBg = (ImageView)findViewById(R.id.splash_bg);
         UtilTools.setBackground(this, mSplashBg);
-        //延时2000ms
-        mHandler.sendEmptyMessageDelayed(StaticClass.HANDLER_SPLASH, 2000);
+        //延时3000ms
+        mHandler.sendEmptyMessageDelayed(StaticClass.HANDLER_SPLASH, 3000);
 
         mTvSplash = (TextView) findViewById(R.id.tv_splash);
         UtilTools.setFont(this, mTvSplash);
@@ -91,27 +84,5 @@ public class SplashActivity extends AppCompatActivity {
     public void onBackPressed() {
         //        super.onBackPressed();
 
-    }
-
-    public void setSplashBackground(final ImageView image) {
-        String backgroungUrl = "http://open.iciba.com/dsapi/";
-        RxVolley.get(backgroungUrl, new HttpCallback() {
-            @Override
-            public void onSuccess(String t) {
-                super.onSuccess(t);
-                try {
-                    JSONObject jsonObject = new JSONObject(t);
-                    String bgImage = jsonObject.getString("picture2");
-                    Picasso.with(SplashActivity.this).load(bgImage).into(image);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(VolleyError error) {
-                super.onFailure(error);
-            }
-        });
     }
 }

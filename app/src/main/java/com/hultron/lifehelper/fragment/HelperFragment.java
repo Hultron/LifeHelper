@@ -53,15 +53,14 @@ public class HelperFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
     }
 
-    //屏幕旋转时，避免重复调用onCreateView
     private View view;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
             Bundle savedInstanceState) {
+        //避免重复调用 onCreateView
         if (null != view) {
             ViewGroup parent = (ViewGroup) view.getParent();
             if (null != parent) {

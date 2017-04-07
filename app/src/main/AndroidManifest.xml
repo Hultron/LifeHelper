@@ -59,6 +59,7 @@
         <!--主页-->
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/MainActivityNoActionBar">
         </activity>
 
@@ -66,11 +67,13 @@
         <!--设置-->
         <activity
             android:name="com.hultron.lifehelper.ui.SettingActivity"
-            android:label="@string/text_setting"/>
+            android:label="@string/text_setting"
+            android:screenOrientation="portrait"/>
 
         <!--闪屏页，程序入口-->
         <activity
             android:name="com.hultron.lifehelper.ui.SplashActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBarFullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -81,65 +84,80 @@
         <!--引导页-->
         <activity
             android:name="com.hultron.lifehelper.ui.GuideActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBarFullScreen"/>
 
         <!--登陆-->
         <activity
             android:name=".ui.LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBarFullScreen">
         </activity>
 
         <!--注册-->
         <activity
             android:name="com.hultron.lifehelper.ui.RegisterActivity"
-            android:label="@string/register"/>
+            android:label="@string/register"
+            android:screenOrientation="portrait"/>
 
         <!--忘记密码-->
         <activity
             android:name="com.hultron.lifehelper.ui.ForgetPasswordActivity"
-            android:label="@string/forget_pass"/>
+            android:label="@string/forget_pass"
+            android:screenOrientation="portrait"/>
 
         <!--快递查询-->
         <activity
             android:name="com.hultron.lifehelper.ui.CourierActivity"
-            android:label="快递查询"/>
+            android:label="快递查询"
+            android:screenOrientation="portrait"/>
 
         <!--归属地查询-->
         <activity
             android:name="com.hultron.lifehelper.ui.PhoneActivity"
-            android:label="归属地查询"/>
+            android:label="归属地查询"
+            android:screenOrientation="portrait"/>
 
         <!--天气查询-->
         <activity
             android:name=".ui.WeatherActivity"
             android:label="天气查询"
+            android:screenOrientation="portrait"
             android:theme="@style/WeatherScreen"/>
 
         <!--新闻详情-->
-        <activity android:name="com.hultron.lifehelper.ui.NewsContentActivity"/>
+        <activity
+            android:name="com.hultron.lifehelper.ui.NewsContentActivity"
+            android:screenOrientation="portrait"/>
 
         <!--下载新版本-->
-        <activity android:name="com.hultron.lifehelper.ui.UpdateActivity"/>
+        <activity
+            android:name="com.hultron.lifehelper.ui.UpdateActivity"
+            android:screenOrientation="portrait"/>
 
         <!--分享二维码-->
         <activity
             android:name="com.hultron.lifehelper.ui.QrCodeShareActivity"
-            android:label="我的二维码"/>
+            android:label="我的二维码"
+            android:screenOrientation="portrait"/>
 
         <!--我的位置-->
         <activity
             android:name=".ui.LocationActivity"
-            android:label="我的位置"/>
+            android:label="我的位置"
+            android:screenOrientation="portrait"/>
 
         <!--关于软件-->
         <activity
             android:name=".ui.AboutSoftwareActivity"
-            android:label="关于软件"/>
+            android:label="关于软件"
+            android:screenOrientation="portrait"/>
 
         <!--个人中心-->
         <activity
             android:name=".ui.UserActivity"
-            android:label="个人中心"/>
+            android:label="个人中心"
+            android:screenOrientation="portrait"/>
 
         <!--短信服务-->
         <service android:name="com.hultron.lifehelper.service.SmsService"/>

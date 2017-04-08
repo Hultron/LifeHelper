@@ -11,7 +11,7 @@ import android.support.annotation.Nullable;
 import com.hultron.lifehelper.gson.weather.Weather;
 import com.hultron.lifehelper.uitils.HttpUtil;
 import com.hultron.lifehelper.uitils.ParsingJson;
-import com.hultron.lifehelper.uitils.ShareUtils;
+import com.hultron.lifehelper.uitils.ShareUtil;
 
 import java.io.IOException;
 
@@ -48,7 +48,7 @@ public class AutoUpdateService extends Service {
     * 更新天气信息
     * */
     private void updateWeather() {
-        String weatherString = ShareUtils.getString(this, "weather", null);
+        String weatherString = ShareUtil.getString(this, "weather", null);
         if (weatherString != null) {
             //有缓存时直接解析天气数据
             Weather weather = ParsingJson.handleWeatherResponse(weatherString);
@@ -68,7 +68,7 @@ public class AutoUpdateService extends Service {
                         String responseText = response.body().string();
                         Weather weather1 = ParsingJson.handleWeatherResponse(responseText);
                         if (weather1 != null && "ok".equals(weather1.status)) {
-                            ShareUtils.putString(AutoUpdateService.this, "weather",
+                            ShareUtil.putString(AutoUpdateService.this, "weather",
                                     responseText);
                         }
                     }
@@ -91,7 +91,7 @@ public class AutoUpdateService extends Service {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String bingPic = response.body().string();
-                ShareUtils.putString(AutoUpdateService.this, "bing_pic", bingPic);
+                ShareUtil.putString(AutoUpdateService.this, "bing_pic", bingPic);
             }
         });
     }

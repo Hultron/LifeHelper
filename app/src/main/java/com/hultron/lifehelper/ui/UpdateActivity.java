@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.hultron.lifehelper.R;
-import com.hultron.lifehelper.uitils.L;
+import com.hultron.lifehelper.uitils.LogUtil;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.ProgressListener;
@@ -111,13 +111,13 @@ public class UpdateActivity extends BaseActivity {
             }, new HttpCallback() {
                 @Override
                 public void onSuccess(String t) {
-                    L.e("成功");
+                    LogUtil.e("成功");
                     mHandler.sendEmptyMessage(HANDLER_OK);
                 }
 
                 @Override
                 public void onFailure(VolleyError error) {
-                    L.e("失败");
+                    LogUtil.e("失败");
                     mHandler.sendEmptyMessage(HANDLER_FAIL);
                 }
             });

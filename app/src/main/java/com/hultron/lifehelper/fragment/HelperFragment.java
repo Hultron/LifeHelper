@@ -1,5 +1,6 @@
 package com.hultron.lifehelper.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -16,8 +19,8 @@ import android.widget.Toast;
 import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.adapter.ChatListAdapter;
 import com.hultron.lifehelper.entity.ChatListData;
-import com.hultron.lifehelper.uitils.L;
-import com.hultron.lifehelper.uitils.ShareUtils;
+import com.hultron.lifehelper.uitils.LogUtil;
+import com.hultron.lifehelper.uitils.ShareUtil;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechSynthesizer;
@@ -47,12 +50,29 @@ public class HelperFragment extends Fragment implements View.OnClickListener {
     //生活小助手
     private LinearLayout lifeHelper;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    private View view;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_helper, container, false);
-        findView(view);
+        //避免重复调用 onCreateView
+        if (null != view) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (null != parent) {
+                parent.removeView(view);
+            }
+        } else {
+            view = inflater.inflate(R.layout.fragment_helper, container, false);
+            findView(view);// 控件初始化
+        }
+        //隐藏软键盘
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams
+                .SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         return view;
     }
 
@@ -120,17 +140,25 @@ public class HelperFragment extends Fragment implements View.OnClickListener {
                         RxVolley.get(turingChat, new HttpCallback() {
                             @Override
                             public void onSuccess(String t) {
-                                L.i(t);
+                                LogUtil.i(t);
                                 parseJson(t);
                             }
                         });
                     }
+                    hiddenKeyboard(v);
                 } else {
                     Toast.makeText(getActivity(), "输入框不能为空", Toast.LENGTH_SHORT).show();
                 }
 
                 break;
         }
+    }
+
+    //隐藏键盘
+    private void hiddenKeyboard(View v) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity()
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
 
@@ -148,7 +176,7 @@ public class HelperFragment extends Fragment implements View.OnClickListener {
 
     //添加左边文本
     private void addLeftItem(String text) {
-        boolean isSpeak = ShareUtils.getBoolean(getActivity(), "isSpeak", false);
+        boolean isSpeak = ShareUtil.getBoolean(getActivity(), "isSpeak", false);
         if (isSpeak) {
             startSpeaking(text);
         }

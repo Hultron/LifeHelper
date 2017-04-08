@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hultron.lifehelper.R;
-import com.hultron.lifehelper.uitils.L;
+import com.hultron.lifehelper.uitils.LogUtil;
 import com.hultron.lifehelper.uitils.StaticClass;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
@@ -149,7 +149,7 @@ public class PhoneActivity extends BaseActivity implements View.OnClickListener 
         RxVolley.get(url, new HttpCallback() {
             @Override
             public void onSuccess(String t) {
-                L.e(t);
+                LogUtil.e(t);
                 parseJson(t);
             }
         });

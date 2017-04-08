@@ -16,5 +16,4 @@
         android:id="@+id/nav_weather"
         android:icon="@drawable/nav_weather"
         android:title="天气查询"/>
-
 </menu>

@@ -10,10 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.hultron.lifehelper.MainActivity;
 import com.hultron.lifehelper.R;
-import com.hultron.lifehelper.uitils.L;
+import com.hultron.lifehelper.uitils.LogUtil;
+import com.hultron.lifehelper.uitils.UtilTools;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +30,8 @@ public class GuideActivity extends AppCompatActivity implements View.OnClickList
     //小圆点
     private ImageView mPointOne, mPointTwo, mPointThree;
     //跳过
-    private ImageView mBack;
+    private ImageView mJump;
+    TextView guideSmart, guideConcise, guideStrong;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,17 +46,22 @@ public class GuideActivity extends AppCompatActivity implements View.OnClickList
         mPointOne = (ImageView) findViewById(R.id.point_one);
         mPointTwo = (ImageView) findViewById(R.id.point_two);
         mPointThree = (ImageView) findViewById(R.id.point_three);
-        mBack = (ImageView) findViewById(R.id.img_back);
-        mBack.setOnClickListener(this);
+        mJump = (ImageView) findViewById(R.id.img_jump);
+        mJump.setOnClickListener(this);
 
         //设置默认
         setPointImg(true, false, false);
 
         mView1 = View.inflate(this, R.layout.page_item_one, null);
+        guideSmart = (TextView) mView1.findViewById(R.id.guide_smart);
+        UtilTools.setFont(this, guideSmart);
         mView2 = View.inflate(this, R.layout.page_item_two, null);
+        guideConcise = (TextView) mView2.findViewById(R.id.guide_concise);
+        UtilTools.setFont(this, guideConcise);
         mView3 = View.inflate(this, R.layout.page_item_three, null);
-
-        mView3.findViewById(R.id.btn_start).setOnClickListener(this);
+        mView3.findViewById(R.id.btn_enter_home_page).setOnClickListener(this);
+        guideStrong = (TextView) mView3.findViewById(R.id.guide_strong);
+        UtilTools.setFont(this, guideStrong);
 
         mViewList.add(mView1);
         mViewList.add(mView2);
@@ -64,25 +73,25 @@ public class GuideActivity extends AppCompatActivity implements View.OnClickList
         //监听 ViewPager 的滑动
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+            public void onPageScrolled(int position, float positionOffset, int
+                    positionOffsetPixels) {
             }
 
             @Override
             public void onPageSelected(int position) {
-                L.i("position: " + position);
+                LogUtil.i("position: " + position);
                 switch (position) {
                     case 0:
                         setPointImg(true, false, false);
-                        mBack.setVisibility(View.VISIBLE);
+                        mJump.setVisibility(View.VISIBLE);
                         break;
                     case 1:
                         setPointImg(false, true, false);
-                        mBack.setVisibility(View.VISIBLE);
+                        mJump.setVisibility(View.VISIBLE);
                         break;
                     case 2:
                         setPointImg(false, false, true);
-                        mBack.setVisibility(View.GONE);
+                        mJump.setVisibility(View.GONE);
                         break;
                 }
             }
@@ -97,8 +106,8 @@ public class GuideActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_start:
-            case R.id.img_back:
+            case R.id.btn_enter_home_page:
+            case R.id.img_jump:
                 startActivity(new Intent(this, MainActivity.class));
                 finish();
                 break;

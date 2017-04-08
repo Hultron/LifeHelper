@@ -23,8 +23,8 @@ import android.widget.Toast;
 
 import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.service.SmsService;
-import com.hultron.lifehelper.uitils.L;
-import com.hultron.lifehelper.uitils.ShareUtils;
+import com.hultron.lifehelper.uitils.LogUtil;
+import com.hultron.lifehelper.uitils.ShareUtil;
 import com.hultron.lifehelper.uitils.StaticClass;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
@@ -79,13 +79,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private void initView() {
         //是否语音
         mSwSpeack = (Switch) findViewById(R.id.sw_speak);
-        boolean isSpeak = ShareUtils.getBoolean(this, "isSpeak", false);
+        boolean isSpeak = ShareUtil.getBoolean(this, "isSpeak", false);
         mSwSpeack.setChecked(isSpeak);
         mSwSpeack.setOnClickListener(this);
 
         //是否短信
         mSwSms = (Switch) findViewById(R.id.sw_sms);
-        boolean isSms = ShareUtils.getBoolean(this, "isSms", false);
+        boolean isSms = ShareUtil.getBoolean(this, "isSms", false);
         mSwSms.setChecked(isSms);
         mSwSms.setOnClickListener(this);
 
@@ -121,7 +121,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 //切换相反
                 mSwSpeack.setSelected(!mSwSpeack.isChecked());
                 //保存状态
-                ShareUtils.putBoolean(this, "isSpeak", mSwSpeack.isChecked());
+                ShareUtil.putBoolean(this, "isSpeak", mSwSpeack.isChecked());
                 break;
             case R.id.sw_sms:
                 if (Build.VERSION.SDK_INT > 22) {
@@ -146,7 +146,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 RxVolley.get(StaticClass.CHECK_UPDATE_URL, new HttpCallback() {
                     @Override
                     public void onSuccess(String t) {
-                        L.i(t);
+                        LogUtil.i(t);
                         parsingJson(t);
                     }
                 });
@@ -247,7 +247,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         //切换相反
         mSwSms.setSelected(!mSwSms.isChecked());
         //保存状态
-        ShareUtils.putBoolean(this, "isSms", mSwSms.isChecked());
+        ShareUtil.putBoolean(this, "isSms", mSwSms.isChecked());
         if (mSwSms.isChecked()) {
             startService(new Intent(this, SmsService.class));
         } else {

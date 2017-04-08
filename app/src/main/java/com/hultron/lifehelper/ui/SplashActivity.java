@@ -6,10 +6,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hultron.lifehelper.R;
-import com.hultron.lifehelper.uitils.ShareUtils;
+import com.hultron.lifehelper.uitils.ShareUtil;
 import com.hultron.lifehelper.uitils.StaticClass;
 import com.hultron.lifehelper.uitils.UtilTools;
 
@@ -19,7 +20,8 @@ import com.hultron.lifehelper.uitils.UtilTools;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private TextView mTvSplash;
+    TextView mTvSplash;
+    ImageView mSplashBg;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -50,27 +52,23 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        
+
         initView();
     }
 
     private void initView() {
-        //延时2s
-        mHandler.sendEmptyMessageDelayed(StaticClass.HANDLER_SPLASH, 2000);
+        //延时3000ms
+        mHandler.sendEmptyMessageDelayed(StaticClass.HANDLER_SPLASH, 3000);
 
         mTvSplash = (TextView) findViewById(R.id.tv_splash);
-
-//        //设置字体
-//        Typeface fontType = Typeface.createFromAsset(getAssets(), "fonts/FONT.TTF");
-//        mTvSplash.setTypeface(fontType);
         UtilTools.setFont(this, mTvSplash);
     }
 
     //判断程序是否第一次运行
     private boolean isFirst() {
-        boolean isFirst = ShareUtils.getBoolean(this, StaticClass.SHARE_IS_FIRST, true);
+        boolean isFirst = ShareUtil.getBoolean(this, StaticClass.SHARE_IS_FIRST, true);
         if (isFirst) {
-            ShareUtils.putBoolean(this, StaticClass.SHARE_IS_FIRST, false);
+            ShareUtil.putBoolean(this, StaticClass.SHARE_IS_FIRST, false);
             //是第一次运行
             return true;
         } else {
@@ -82,7 +80,7 @@ public class SplashActivity extends AppCompatActivity {
     //禁止返回键
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
+        //        super.onBackPressed();
 
     }
 }

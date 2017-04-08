@@ -24,7 +24,7 @@ import com.hultron.lifehelper.gson.weather.Weather;
 import com.hultron.lifehelper.service.AutoUpdateService;
 import com.hultron.lifehelper.uitils.HttpUtil;
 import com.hultron.lifehelper.uitils.ParsingJson;
-import com.hultron.lifehelper.uitils.ShareUtils;
+import com.hultron.lifehelper.uitils.ShareUtil;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -96,13 +96,13 @@ public class WeatherActivity extends AppCompatActivity {
         carWashText = (TextView) findViewById(R.id.car_wash_text);
         sportText = (TextView) findViewById(R.id.sport_text);
         bingPicImg = (ImageView) findViewById(R.id.bing_pic_img);
-        String bingPic = ShareUtils.getString(this, "bing_pic", null);
+        String bingPic = ShareUtil.getString(this, "bing_pic", null);
         if (bingPic != null) {
             Picasso.with(this).load(bingPic).into(bingPicImg);
         } else {
             loadBingPic();
         }
-        String weatherString = ShareUtils.getString(this, "weather", null);
+        String weatherString = ShareUtil.getString(this, "weather", null);
         final String weatherId;
         if (weatherString != null) {
             //有缓存时直接解析天气数据
@@ -138,7 +138,7 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String bingPic = response.body().string();
-                ShareUtils.putString(WeatherActivity.this, "bing_pic", bingPic);
+                ShareUtil.putString(WeatherActivity.this, "bing_pic", bingPic);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -155,6 +155,13 @@ public class WeatherActivity extends AppCompatActivity {
     public void requestWeather(final String weatherId) {
         String weatherUrl = "http://guolin.tech/api/weather?cityid=" + weatherId +
                 "&key=edcc301174514a5e811431c763457862";
+        if (weatherId == null) {
+            Toast.makeText(WeatherActivity.this,
+                    "当前没有选择城市，无法查询天气，请在左侧导航菜单中选择城市",
+                    Toast.LENGTH_LONG).show();
+            drawerLayout.openDrawer(GravityCompat.START);
+            return;
+        }
         HttpUtil.sendOkHttpRequest(weatherUrl, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -162,7 +169,8 @@ public class WeatherActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(WeatherActivity.this, "获取天气信息失败，请在左侧导航菜单中选择城市",
+                        Toast.makeText(WeatherActivity.this,
+                                "获取天气信息失败，请在左侧导航菜单中选择城市",
                                 Toast.LENGTH_LONG).show();
                         swipeRefreshLayout.setRefreshing(false);
                     }
@@ -177,7 +185,7 @@ public class WeatherActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         if (weather != null && "ok".equals(weather.status)) {
-                            ShareUtils.putString(WeatherActivity.this, "weather", responseText);
+                            ShareUtil.putString(WeatherActivity.this, "weather", responseText);
                             showWeatherInfo(weather);
                         } else {
                             Toast.makeText(WeatherActivity.this, "获取天气信息成功",

@@ -1,7 +1,6 @@
 package com.hultron.lifehelper.fragment;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,7 +16,7 @@ import android.widget.Toast;
 
 import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.ui.WeatherActivity;
-import com.hultron.lifehelper.uitils.L;
+import com.hultron.lifehelper.uitils.LogUtil;
 import com.hultron.lifehelper.database.City;
 import com.hultron.lifehelper.database.County;
 import com.hultron.lifehelper.database.Province;
@@ -34,7 +33,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 import com.hultron.lifehelper.uitils.ParsingJson;
-import com.hultron.lifehelper.uitils.ShareUtils;
+import com.hultron.lifehelper.uitils.ShareUtil;
 
 /**
  * 遍历省市县数据的碎片
@@ -109,7 +108,7 @@ public class ChooseAreaFragment extends Fragment {
                    WeatherActivity activity = (WeatherActivity) getActivity();
                     activity.drawerLayout.closeDrawers();
                     activity.swipeRefreshLayout.setRefreshing(true);
-                    ShareUtils.putString(activity, "weather_id", null);
+                    ShareUtil.putString(activity, "weather_id", null);
                     activity.requestWeather(weatherId);
                 }
             }
@@ -218,7 +217,7 @@ public class ChooseAreaFragment extends Fragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String responseText = response.body().string();
-                L.e(responseText);
+                LogUtil.e(responseText);
                 boolean result = false;
                 if ("province".equals(type)) {
                     result = ParsingJson.handleProvinceResponse(responseText);

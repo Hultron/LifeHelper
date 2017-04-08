@@ -11,7 +11,8 @@ public class StaticClass {
     public static final String SHARE_IS_FIRST = "isFirst";
 
     //Bugly App ID
-    public static final String BUGLY_APP_ID = "489688b45e";
+    public static final String BUGLY_APP_ID = "24f4166481";
+
     //Bmob App ID
     public static final String BMOB_APP_ID = "d96c87674bf82dd6febd3aa4216c91c1";
 
@@ -42,6 +43,7 @@ public class StaticClass {
 
     //百度key 5GPKgGRH6LFO9pf9CCT3Rnnlx7BgZLXx
     public static final String BAIDU_LBS_KEY = "5GPKgGRH6LFO9pf9CCT3Rnnlx7BgZLXx";
+    public static final String KEEP_PASS = "keeppass";
 }
 
 

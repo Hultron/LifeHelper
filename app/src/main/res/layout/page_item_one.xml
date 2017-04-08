@@ -9,12 +9,13 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher"/>
+        android:src="@drawable/guide_smart"/>
 
     <TextView
+        android:id="@+id/guide_smart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="One"
+        android:text="智能"
         android:textSize="30sp"/>
 
 </LinearLayout>

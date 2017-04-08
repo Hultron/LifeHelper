@@ -27,7 +27,7 @@
             android:orientation="vertical">
 
             <android.support.design.widget.TabLayout
-                android:id="@+id/mTabLayout"
+                android:id="@+id/main_tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#1976D2"
@@ -38,7 +38,7 @@
                 app:tabTextColor="@android:color/white"/>
 
             <android.support.v4.view.ViewPager
-                android:id="@+id/mViewPager"
+                android:id="@+id/main_view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"/>

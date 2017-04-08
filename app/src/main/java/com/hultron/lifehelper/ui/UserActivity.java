@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.entity.MyUser;
-import com.hultron.lifehelper.uitils.L;
+import com.hultron.lifehelper.uitils.LogUtil;
 import com.hultron.lifehelper.uitils.UtilTools;
 import com.hultron.lifehelper.view.CustomDialog;
 
@@ -324,7 +324,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
                     Toast.makeText(UserActivity.this, "头像保存成功",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    L.e(e.toString());
+                    LogUtil.e(e.toString());
                 }
             }
         });

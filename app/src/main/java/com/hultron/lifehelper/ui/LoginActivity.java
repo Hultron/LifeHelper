@@ -3,7 +3,6 @@ package com.hultron.lifehelper.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -11,22 +10,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hultron.lifehelper.MainActivity;
 import com.hultron.lifehelper.R;
 import com.hultron.lifehelper.entity.MyUser;
-import com.hultron.lifehelper.uitils.ShareUtils;
-import com.hultron.lifehelper.view.CustomDialog;
-
+import com.hultron.lifehelper.uitils.ShareUtil;
+import com.hultron.lifehelper.uitils.StaticClass;
 import com.hultron.lifehelper.uitils.UtilTools;
-
+import com.hultron.lifehelper.view.CustomDialog;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.http.VolleyError;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,40 +37,27 @@ import cn.bmob.v3.listener.SaveListener;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button mRegister;
-    private Button mLogin;
+    Button mRegister;
+    Button mLogin;
     private EditText mUserName, mPassword;
-    private TextView mForgetPassword;
+    TextView mForgetPassword;
     private CheckBox mKeepPass;
 
     private CustomDialog mCustomDialog;
     public TextView appLabel;
-    private ImageView loginBg;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        //隐藏系统自带标题栏
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
         initView();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        setAppLabel(appLabel);
-    }
 
     private void initView() {
-        loginBg = (ImageView) findViewById(R.id.login_bg);
-        setLoginBackground(loginBg);
         appLabel = (TextView) findViewById(R.id.label);
-        setAppLabel(appLabel);
         UtilTools.setFont(this, appLabel);
+        setAppLabel(appLabel);
         mRegister = (Button) findViewById(R.id.btn_register);
         mRegister.setOnClickListener(this);
         mUserName = (EditText) findViewById(R.id.user_name);
@@ -86,12 +69,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mForgetPassword.setOnClickListener(this);
 
         //设置选中状态
-        boolean isChecked = ShareUtils.getBoolean(this, "keeppass", false);
+        boolean isChecked = ShareUtil.getBoolean(this, StaticClass.KEEP_PASS, false);
         mKeepPass.setChecked(isChecked);
         if (isChecked) {
             //显示用户名和密码
-            mUserName.setText(ShareUtils.getString(this, "name", ""));
-            mPassword.setText(ShareUtils.getString(this, "password", ""));
+            mUserName.setText(ShareUtil.getString(this, "name", ""));
+            mPassword.setText(ShareUtil.getString(this, "password", ""));
         }
 
         mCustomDialog = new CustomDialog(this, 200, 200, R.layout.dialog_loading, R.style
@@ -159,23 +142,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onDestroy() {
 
         //保存状态
-        ShareUtils.putBoolean(this, "keeppass", mKeepPass.isChecked());
+        ShareUtil.putBoolean(this, "keeppass", mKeepPass.isChecked());
 
         //是否记住密码
         if (mKeepPass.isChecked()) {
             //记住密码
-            ShareUtils.putString(this, "name", mUserName.getText().toString().trim());
-            ShareUtils.putString(this, "password", mPassword.getText().toString().trim());
+            ShareUtil.putString(this, "name", mUserName.getText().toString().trim());
+            ShareUtil.putString(this, "password", mPassword.getText().toString().trim());
         } else {
             //清除密码
-            ShareUtils.deleShare(this, "name");
-            ShareUtils.deleShare(this, "password");
+            ShareUtil.deleShare(this, "name");
+            ShareUtil.deleShare(this, "password");
         }
-
         super.onDestroy();
     }
 
-    public void setAppLabel(final TextView appLabel) {
+    private void setAppLabel(final TextView appLabel) {
         String cibarDailyUrl = "https://api.tianapi" +
                 ".com/txapi/dictum/?key=f518734caa0bcf19f8ee1b4c4ede2b65";
         RxVolley.get(cibarDailyUrl, new HttpCallback() {
@@ -200,25 +182,4 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    public void setLoginBackground(final ImageView image) {
-        String backgroungUrl = "http://open.iciba.com/dsapi/";
-        RxVolley.get(backgroungUrl, new HttpCallback() {
-            @Override
-            public void onSuccess(String t) {
-                super.onSuccess(t);
-                try {
-                    JSONObject jsonObject = new JSONObject(t);
-                    String bgImage = jsonObject.getString("picture2");
-                    Picasso.with(LoginActivity.this).load(bgImage).into(image);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(VolleyError error) {
-                super.onFailure(error);
-            }
-        });
-    }
 }

@@ -2,12 +2,10 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg1">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/login_bg"
-        android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
@@ -22,10 +20,8 @@
             android:gravity="center"
             android:id="@+id/label"
             android:textSize="25sp"
-            android:text="当前无网络,无法刷新每日一句"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
 
         <LinearLayout
             android:layout_margin="40dp"

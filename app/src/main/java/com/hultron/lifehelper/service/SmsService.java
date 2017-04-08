@@ -20,7 +20,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.hultron.lifehelper.R;
-import com.hultron.lifehelper.uitils.L;
+import com.hultron.lifehelper.uitils.LogUtil;
 import com.hultron.lifehelper.uitils.StaticClass;
 import com.hultron.lifehelper.view.DispatchLinearLayout;
 
@@ -66,7 +66,7 @@ public class SmsService extends Service {
     }
 
     private void init() {
-        L.i("init service");
+        LogUtil.i("init service");
         /*
         * 动态注册广播
         * */
@@ -87,7 +87,7 @@ public class SmsService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        L.i("stop service");
+        LogUtil.i("stop service");
         //注销广播
         unregisterReceiver(mSmsReceiver);
         unregisterReceiver(mHomeWatchReceiver);
@@ -100,7 +100,7 @@ public class SmsService extends Service {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (StaticClass.SMS_ACTION.equals(action)) {
-                L.i("来短信了");
+                LogUtil.i("来短信了");
                 //获取短信内容，返回的是一个Object数组
                 Object[] objs = (Object[]) intent.getExtras().get("pdus");
                 //遍历数组得到相关数据
@@ -109,7 +109,7 @@ public class SmsService extends Service {
                     //发件人
                     smsPhone = sms.getOriginatingAddress();
                     smsContent = sms.getMessageBody();
-                    L.i("短信内容：" + smsPhone + smsContent);
+                    LogUtil.i("短信内容：" + smsPhone + smsContent);
                     showWindow();
                 }
             }
@@ -159,7 +159,7 @@ public class SmsService extends Service {
             public boolean dispatchKeyEvent(KeyEvent event) {
                 //判断是否是按返回键
                 if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-                    L.i("按下back");
+                    LogUtil.i("按下back");
                     if (mView.getParent() != null) {
                         wm.removeView(mView);
                     } else {
@@ -203,7 +203,7 @@ public class SmsService extends Service {
             if (action.equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)) {
                 String reason = intent.getStringExtra(SYSTEM_DIALOGS_REASON_KEY);
                 if (reason.equals(SYSTEM_DIALOGS_HOME_KEY)) {
-                    L.i("点击Home");
+                    LogUtil.i("点击Home");
                     if (mView.getParent() != null) {
                         wm.removeView(mView);
                     }

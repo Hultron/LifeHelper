@@ -12,6 +12,14 @@ import android.util.Base64;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpCallback;
+import com.kymjs.rxvolley.http.VolleyError;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
@@ -34,13 +42,13 @@ public class UtilTools {
         byte[] byteArray = byteArrayOutputStream.toByteArray();
         String imageString = new String(Base64.encode(byteArray, Base64.DEFAULT));
         //第三步：将String保存到ShareUtils
-        ShareUtils.putString(context, "image_title", imageString);
+        ShareUtil.putString(context, "image_title", imageString);
     }
 
     //从ShareUtils获取图片
     public static void getImageFromShare(Context context, ImageView imageView) {
         //1.拿到String
-        String imgString = ShareUtils.getString(context, "image_title", "");
+        String imgString = ShareUtil.getString(context, "image_title", "");
         if (!imgString.equals("")) {
             //2.利用Base64将字符串转化为字节数组
             byte[] b = Base64.decode(imgString, Base64.DEFAULT);
@@ -60,5 +68,28 @@ public class UtilTools {
         } catch (PackageManager.NameNotFoundException e) {
             return "未知";
         }
+    }
+
+    //设置背景
+    public static void setBackground(final Context context, final ImageView image) {
+        String backgroungUrl = "http://open.iciba.com/dsapi/";
+        RxVolley.get(backgroungUrl, new HttpCallback() {
+            @Override
+            public void onSuccess(String t) {
+                super.onSuccess(t);
+                try {
+                    JSONObject jsonObject = new JSONObject(t);
+                    String bgImage = jsonObject.getString("picture2");
+                    Picasso.with(context).load(bgImage).into(image);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(VolleyError error) {
+                super.onFailure(error);
+            }
+        });
     }
 }

@@ -6,11 +6,11 @@ import android.util.Log;
  * 自定义 Log
  */
 
-public class L {
+public class LogUtil {
     //开关
     public static final boolean DEBUG = true;
     //TAG
-    private static final String TAG = "Smartbutler";
+    private static final String TAG = "LifeHelper";
 
     //五个等级 DIWEF
     public static void d(String text) {

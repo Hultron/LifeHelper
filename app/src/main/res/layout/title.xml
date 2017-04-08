@@ -11,7 +11,7 @@
         android:layout_marginLeft="10dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/ic_nav_homepage"/>
+        android:background="@drawable/titlebar_menu"/>
 
     <TextView
         android:id="@+id/title_city"

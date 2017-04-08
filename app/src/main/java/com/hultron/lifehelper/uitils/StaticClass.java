@@ -44,6 +44,9 @@ public class StaticClass {
     //百度key 5GPKgGRH6LFO9pf9CCT3Rnnlx7BgZLXx
     public static final String BAIDU_LBS_KEY = "5GPKgGRH6LFO9pf9CCT3Rnnlx7BgZLXx";
     public static final String KEEP_PASS = "keeppass";
+
+    //天气查询城市id
+    public static final String WEATHER_ID = "weatherId";
 }
 
 

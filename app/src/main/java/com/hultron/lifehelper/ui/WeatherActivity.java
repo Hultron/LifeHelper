@@ -25,6 +25,7 @@ import com.hultron.lifehelper.service.AutoUpdateService;
 import com.hultron.lifehelper.uitils.HttpUtil;
 import com.hultron.lifehelper.uitils.ParsingJson;
 import com.hultron.lifehelper.uitils.ShareUtil;
+import com.hultron.lifehelper.uitils.StaticClass;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -57,7 +58,7 @@ public class WeatherActivity extends AppCompatActivity {
     public SwipeRefreshLayout swipeRefreshLayout;
 
     public DrawerLayout drawerLayout;
-    private Button navButton;
+    Button navButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -107,22 +108,19 @@ public class WeatherActivity extends AppCompatActivity {
         if (weatherString != null) {
             //有缓存时直接解析天气数据
             Weather weather = ParsingJson.handleWeatherResponse(weatherString);
-            if (weather != null) {
-                weatherId = weather.basic.weatherId;
-            } else {
-                weatherId = null;
-            }
             showWeatherInfo(weather);
         } else {
             //无缓存时去服务器查询天气
-            weatherId = getIntent().getStringExtra("weather_id");
+            weatherId = ShareUtil.getString(WeatherActivity.this, StaticClass.WEATHER_ID, null);
             weatherLayout.setVisibility(View.INVISIBLE);
             requestWeather(weatherId);
         }
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                requestWeather(weatherId);
+                String refreshWeatherId = ShareUtil.getString(WeatherActivity.this, StaticClass.WEATHER_ID,
+                        null);
+                requestWeather(refreshWeatherId);
             }
         });
     }
@@ -157,8 +155,7 @@ public class WeatherActivity extends AppCompatActivity {
                 "&key=edcc301174514a5e811431c763457862";
         if (weatherId == null) {
             Toast.makeText(WeatherActivity.this,
-                    "当前没有选择城市，无法查询天气，请在左侧导航菜单中选择城市",
-                    Toast.LENGTH_LONG).show();
+                    "当前没有选择城市，无法查询天气，请先选择城市", Toast.LENGTH_LONG).show();
             drawerLayout.openDrawer(GravityCompat.START);
             return;
         }
@@ -188,7 +185,7 @@ public class WeatherActivity extends AppCompatActivity {
                             ShareUtil.putString(WeatherActivity.this, "weather", responseText);
                             showWeatherInfo(weather);
                         } else {
-                            Toast.makeText(WeatherActivity.this, "获取天气信息成功",
+                            Toast.makeText(WeatherActivity.this, "获取天气信息失败",
                                     Toast.LENGTH_SHORT).show();
                         }
                         swipeRefreshLayout.setRefreshing(false);

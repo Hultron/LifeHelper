@@ -15,12 +15,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hultron.lifehelper.R;
-import com.hultron.lifehelper.ui.WeatherActivity;
-import com.hultron.lifehelper.uitils.LogUtil;
 import com.hultron.lifehelper.database.City;
 import com.hultron.lifehelper.database.County;
 import com.hultron.lifehelper.database.Province;
+import com.hultron.lifehelper.ui.WeatherActivity;
 import com.hultron.lifehelper.uitils.HttpUtil;
+import com.hultron.lifehelper.uitils.LogUtil;
+import com.hultron.lifehelper.uitils.ParsingJson;
+import com.hultron.lifehelper.uitils.ShareUtil;
+import com.hultron.lifehelper.uitils.StaticClass;
 
 import org.litepal.crud.DataSupport;
 
@@ -31,9 +34,6 @@ import java.util.List;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-
-import com.hultron.lifehelper.uitils.ParsingJson;
-import com.hultron.lifehelper.uitils.ShareUtil;
 
 /**
  * 遍历省市县数据的碎片
@@ -105,10 +105,10 @@ public class ChooseAreaFragment extends Fragment {
                     queryCounties();
                 } else if (currentLevel == LEVEL_COUNTY) {
                     String weatherId = countyList.get(position).getWeatherId();
-                   WeatherActivity activity = (WeatherActivity) getActivity();
+                    WeatherActivity activity = (WeatherActivity) getActivity();
                     activity.drawerLayout.closeDrawers();
                     activity.swipeRefreshLayout.setRefreshing(true);
-                    ShareUtil.putString(activity, "weather_id", null);
+                    ShareUtil.putString(getActivity(), StaticClass.WEATHER_ID, weatherId);
                     activity.requestWeather(weatherId);
                 }
             }

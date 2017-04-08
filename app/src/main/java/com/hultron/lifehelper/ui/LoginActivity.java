@@ -57,11 +57,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     private void initView() {
-        loginBg = (ImageView) findViewById(R.id.login_bg);
-        UtilTools.setBackground(this, loginBg);
-        appLabel = (TextView) findViewById(R.id.label);
-        UtilTools.setFont(this, appLabel);
-        setAppLabel(appLabel);
         mRegister = (Button) findViewById(R.id.btn_register);
         mRegister.setOnClickListener(this);
         mUserName = (EditText) findViewById(R.id.user_name);
@@ -71,6 +66,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mKeepPass = (CheckBox) findViewById(R.id.keep_pass);
         mForgetPassword = (TextView) findViewById(R.id.forget_pass_word);
         mForgetPassword.setOnClickListener(this);
+
+        appLabel = (TextView) findViewById(R.id.label);
+        UtilTools.setFont(this, appLabel);
+        setAppLabel(appLabel);
+        loginBg = (ImageView) findViewById(R.id.login_bg);
+        UtilTools.setBackground(this, loginBg);
 
         //设置选中状态
         boolean isChecked = ShareUtil.getBoolean(this, StaticClass.KEEP_PASS, false);

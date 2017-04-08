@@ -17,9 +17,6 @@ import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.http.VolleyError;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
@@ -72,16 +69,14 @@ public class UtilTools {
 
     //设置背景
     public static void setBackground(final Context context, final ImageView image) {
-        String backgroungUrl = "http://open.iciba.com/dsapi/";
+        String backgroungUrl = "http://guolin.tech/api/bing_pic";
         RxVolley.get(backgroungUrl, new HttpCallback() {
             @Override
             public void onSuccess(String t) {
                 super.onSuccess(t);
                 try {
-                    JSONObject jsonObject = new JSONObject(t);
-                    String bgImage = jsonObject.getString("picture2");
-                    Picasso.with(context).load(bgImage).into(image);
-                } catch (JSONException e) {
+                    Picasso.with(context).load(t).into(image);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

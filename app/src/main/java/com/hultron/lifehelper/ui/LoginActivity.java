@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private CustomDialog mCustomDialog;
     public TextView appLabel;
+    ImageView loginBg;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,6 +57,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     private void initView() {
+        loginBg = (ImageView) findViewById(R.id.login_bg);
+        UtilTools.setBackground(this, loginBg);
         appLabel = (TextView) findViewById(R.id.label);
         UtilTools.setFont(this, appLabel);
         setAppLabel(appLabel);

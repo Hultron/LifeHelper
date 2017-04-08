@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:src="@drawable/bg1"
         android:id="@+id/login_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">LifeHelper</string>
     <string name="girls_welfare">Girls</string>
-    <string name="chatting_robot">ServiceButler</string>
+    <string name="chatting_robot">ChattingRobot</string>
     <string name="recent_weather">UserCenter</string>
-    <string name="update_news">WechatNews</string>
+    <string name="update_news">UpdateNews</string>
 </resources>

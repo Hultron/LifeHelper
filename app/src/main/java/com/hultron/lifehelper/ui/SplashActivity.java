@@ -33,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
                     if (isFirst()) {
                         startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     } else {
-                        startActivity(new Intent(SplashActivity.this, GuideActivity.class));
+                        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     }
                     finish();
                     break;
@@ -57,8 +57,6 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        mSplashBg = (ImageView)findViewById(R.id.splash_bg);
-        UtilTools.setBackground(this, mSplashBg);
         //延时3000ms
         mHandler.sendEmptyMessageDelayed(StaticClass.HANDLER_SPLASH, 3000);
 

@@ -48,22 +48,22 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     //6.0及以上系统申请SYSTEM_ALERT_WINDOW权限码
     private static int OVERLAY_PERMISSION_REQ_CODE = 1234;
     //检测更新
-    private LinearLayout mUpdate;
-    private TextView mTvVersion;
+    LinearLayout mUpdate;
+    TextView mTvVersion;
     private String versionName;
     private int versionCode;
 
     //二维码扫描
-    private LinearLayout mQrcodeScan;
+    LinearLayout mQrcodeScan;
     private TextView mScanResult;//扫描结果
     //生成二维码
-    private LinearLayout mQrcodeShare;
+    LinearLayout mQrcodeShare;
 
     //我的位置
-    private LinearLayout mMyLocation;
+    LinearLayout mMyLocation;
 
     //关于软件
-    private LinearLayout mAboutSoftware;
+    LinearLayout mAboutSoftware;
 
     private String url;
 
@@ -114,6 +114,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         mMyLocation.setOnClickListener(this);
 
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -124,11 +125,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 ShareUtil.putBoolean(this, "isSpeak", mSwSpeack.isChecked());
                 break;
             case R.id.sw_sms:
-                if (Build.VERSION.SDK_INT > 22) {
+                if (Build.VERSION.SDK_INT >= 23) {
                     requestDrawOverLays();
                 }
-                if (ContextCompat.checkSelfPermission(this,
-                        Manifest.permission.RECEIVE_SMS) !=
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) !=
                         PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(this,
                             new String[]{Manifest.permission.RECEIVE_SMS},
@@ -231,6 +231,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 } else {
                     Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT)
                             .show();
+                    mSwSms.setSelected(false);
+                    ShareUtil.putBoolean(this, "isSms", mSwSms.isChecked());
                 }
                 break;
             case QRCODE_RESULT:
@@ -254,6 +256,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             stopService(new Intent(this, SmsService.class));
         }
     }
+
     @TargetApi(Build.VERSION_CODES.M)
     private void requestDrawOverLays() {
         if (!Settings.canDrawOverlays(SettingActivity.this)) {
@@ -273,6 +276,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             mSwSms.setChecked(false);
+                            ShareUtil.putBoolean(SettingActivity.this, "isSms", mSwSms.isChecked());
                         }
                     })
                     .create();
@@ -288,8 +292,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 Toast.makeText(this, "Permission Denied by user.", Toast.LENGTH_SHORT)
                         .show();
                 mSwSms.setChecked(false);
+                ShareUtil.putBoolean(this, "isSms", mSwSms.isChecked());
             } else {
                 Toast.makeText(this, "Permission allowed", Toast.LENGTH_SHORT).show();
+                mSwSms.setChecked(true);
+                ShareUtil.putBoolean(this, "isSms", mSwSms.isChecked());
             }
         } else if (requestCode == QRCODE_RESULT) {
             if (resultCode == RESULT_OK) {

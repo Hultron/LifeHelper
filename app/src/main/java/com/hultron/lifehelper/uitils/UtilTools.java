@@ -12,11 +12,6 @@ import android.util.Base64;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.kymjs.rxvolley.RxVolley;
-import com.kymjs.rxvolley.client.HttpCallback;
-import com.kymjs.rxvolley.http.VolleyError;
-import com.squareup.picasso.Picasso;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
@@ -28,7 +23,7 @@ public class UtilTools {
         textView.setTypeface(fontType);
     }
 
-    //保存图片到ShareUtils
+    //保存图片到ShareUtil
     public static void putImageToShare(Context context, ImageView imageView) {
         BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
         Bitmap bitmap = bitmapDrawable.getBitmap();
@@ -65,26 +60,5 @@ public class UtilTools {
         } catch (PackageManager.NameNotFoundException e) {
             return "未知";
         }
-    }
-
-    //设置背景
-    public static void setBackground(final Context context, final ImageView image) {
-        String backgroungUrl = "http://guolin.tech/api/bing_pic";
-        RxVolley.get(backgroungUrl, new HttpCallback() {
-            @Override
-            public void onSuccess(String t) {
-                super.onSuccess(t);
-                try {
-                    Picasso.with(context).load(t).into(image);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(VolleyError error) {
-                super.onFailure(error);
-            }
-        });
     }
 }

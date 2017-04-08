@@ -1,16 +1,15 @@
 package com.hultron.lifehelper.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +19,6 @@ import com.hultron.lifehelper.entity.MyUser;
 import com.hultron.lifehelper.uitils.ShareUtil;
 import com.hultron.lifehelper.uitils.StaticClass;
 import com.hultron.lifehelper.uitils.UtilTools;
-import com.hultron.lifehelper.view.CustomDialog;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.http.VolleyError;
@@ -43,10 +41,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText mUserName, mPassword;
     TextView mForgetPassword;
     private CheckBox mKeepPass;
-
-    private CustomDialog mCustomDialog;
+    private ProgressDialog mProgressDialog;
     public TextView appLabel;
-    ImageView loginBg;
+    //private ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,8 +67,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         appLabel = (TextView) findViewById(R.id.label);
         UtilTools.setFont(this, appLabel);
         setAppLabel(appLabel);
-        loginBg = (ImageView) findViewById(R.id.login_bg);
-        UtilTools.setBackground(this, loginBg);
 
         //设置选中状态
         boolean isChecked = ShareUtil.getBoolean(this, StaticClass.KEEP_PASS, false);
@@ -82,11 +77,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             mPassword.setText(ShareUtil.getString(this, "password", ""));
         }
 
-        mCustomDialog = new CustomDialog(this, 200, 200, R.layout.dialog_loading, R.style
-                .Theme_dialog, Gravity.CENTER);
+//        mCustomDialog = new CustomDialog(this, 400, 400, R.layout.dialog_loading, R.style
+//                .Theme_dialog, Gravity.CENTER);
 
+        mProgressDialog = new ProgressDialog(this);
         //屏幕外点击无效
-        mCustomDialog.setCancelable(false);
+        //mCustomDialog.setCancelable(false);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setMessage("正在登陆......");
+
+        //mProgressBar = (ProgressBar) findViewById(R.id.before_login);
+
 
     }
 
@@ -104,7 +105,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String password = mPassword.getText().toString().trim();
                 //2.判断是否为空
                 if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(password)) {
-                    mCustomDialog.show();
+                    mProgressDialog.show();
                     //登陆
                     final MyUser user = new MyUser();
                     user.setUsername(name);
@@ -112,7 +113,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     user.login(new SaveListener<MyUser>() {
                         @Override
                         public void done(MyUser myUser, BmobException e) {
-                            mCustomDialog.dismiss();
+                            mProgressDialog.dismiss();
                             if (e == null) {
                                 //判断是否验证邮箱
                                 if (user.getEmailVerified()) {
@@ -121,8 +122,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     finish();
                                 } else {
                                     Toast.makeText(LoginActivity.this, "请前往邮箱验证", Toast
-                                            .LENGTH_SHORT)
-                                            .show();
+                                            .LENGTH_SHORT).show();
                                 }
                             } else {
                                 Toast.makeText(LoginActivity.this, "登陆失败，用户名或密码错误", Toast

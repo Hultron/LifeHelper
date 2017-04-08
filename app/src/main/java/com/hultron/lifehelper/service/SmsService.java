@@ -41,13 +41,13 @@ public class SmsService extends Service {
     //窗口管理器
     private WindowManager wm;
     //布局参数
-    private WindowManager.LayoutParams layoutparams;
+    WindowManager.LayoutParams layoutparams;
     //View
     private DispatchLinearLayout mView;
 
-    private TextView mTvPhone;
-    private TextView mTvContent;
-    private Button mSendSms;
+    TextView mTvPhone;
+    TextView mTvContent;
+    Button mSendSms;
 
     //Home键监听广播
     private HomeWatchReceiver mHomeWatchReceiver;
@@ -203,7 +203,10 @@ public class SmsService extends Service {
             if (action.equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)) {
                 String reason = intent.getStringExtra(SYSTEM_DIALOGS_REASON_KEY);
                 if (reason.equals(SYSTEM_DIALOGS_HOME_KEY)) {
-                    LogUtil.i("点击Home");
+                    if (mView == null) {
+                        return;
+                    }
+
                     if (mView.getParent() != null) {
                         wm.removeView(mView);
                     }

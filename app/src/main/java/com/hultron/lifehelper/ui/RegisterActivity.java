@@ -22,7 +22,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private EditText mUser, mAge, mDesc, mPass, mPassword, mEmail;
     private RadioGroup mRadioGroup;
-    private Button mRegister;
+    Button mRegister;
     private boolean isGender = true;
 
     @Override
@@ -115,6 +115,5 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }
                 break;
         }
-
     }
 }

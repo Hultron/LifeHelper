@@ -17,12 +17,12 @@ import cn.bmob.v3.listener.UpdateListener;
 
 public class ForgetPasswordActivity extends BaseActivity implements View.OnClickListener {
 
-    private Button mForgetButton;
+    Button mForgetButton;
     private EditText mEmail;
     private EditText mNowPass;
     private EditText mNewPass;
     private EditText mNewPassword;
-    private Button mUpdatePass;
+    Button mUpdatePass;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -18,13 +18,13 @@
     <string name="girl">女</string>
     <string name="re_pass">确认密码</string>
     <string name="e_mail">邮箱</string>
-    <string name="confirm">注册成功需要前往邮箱验证，否则无法登陆！</string>
+    <string name="confirm">若要成功注册，需要前往邮箱验证，否则无法登陆！</string>
     <string name="desc_content">这个人很懒，什么都没留下。</string>
     <string name="modify_pass">修改密码</string>
     <string name="old_pass">旧密码</string>
     <string name="new_pass">新密码</string>
     <string name="re_input">再次输入密码</string>
-    <string name="forget_pass">忘记密码</string>
+    <string name="forget_pass">重置密码</string>
     <string name="email">邮箱</string>
     <string name="text_now_loading">正在登陆。。。</string>
     <string name="edit_user">编辑资料</string>

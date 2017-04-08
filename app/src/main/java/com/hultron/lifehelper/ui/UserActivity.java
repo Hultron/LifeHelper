@@ -1,17 +1,12 @@
 package com.hultron.lifehelper.ui;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -50,7 +45,6 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     * */
     public static final int CAMERA = 1111;
     public static final int PICTURE = 1345;
-    private static final int OVERLAY_PERMISSION_REQ_CODE = 1567;
 
     private TextView mEditUser;
     private EditText mUserName, mSex, mAge, mDesc;
@@ -58,15 +52,13 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     //圆形头像
     private CircleImageView mAddPic;
     private CustomDialog mDialog;
-    private Button mCamera, mPicture, mCancel;
+    Button mCamera, mPicture, mCancel;
     private Button mConfirmUpdate;
 
     //照片以时间戳命名，避免重复
-    public static final String PHOTO_IAMGE_FILE_NAME = "fileImg.jpg";
     public static final int TAKE_PHOTO = 4000;
     public static final int CHOOSE_PHOTO = 4001;
     public static final int CROP = 4002;
-    private Uri imageUri;
     private File tempFile = null;
 
     @Override
@@ -173,7 +165,6 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
                 mDialog.show();
                 break;
             case R.id.btn_camera:
-
                 performRequestPermissions("您必须授予应用相机权限，否则无法拍照",
                         new String[]{Manifest.permission.CAMERA},
                         CAMERA, new PermissionsResultListener() {
@@ -208,26 +199,6 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
         startActivityForResult(intent, CHOOSE_PHOTO);
     }
 
-
-    public boolean hasPermissionInManifest(Context context, String permissionName) {
-        final String packageName = context.getPackageName();
-        try {
-            final PackageInfo packageInfo = context.getPackageManager()
-                    .getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
-            final String[] declaredPermisisons = packageInfo.requestedPermissions;
-            if (declaredPermisisons != null && declaredPermisisons.length > 0) {
-                for (String p : declaredPermisisons) {
-                    if (p.equals(permissionName)) {
-                        return true;
-                    }
-                }
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-
-        }
-        return false;
-    }
-
     //打开相机
     private void openCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -243,15 +214,6 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
             return;
         }
         switch (requestCode) {
-            case OVERLAY_PERMISSION_REQ_CODE:
-                if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(this)) {
-                    //SYSTEM_ALERT_WINDOW permission not granted...
-                    Toast.makeText(this, "Permission Denied by user.", Toast.LENGTH_SHORT)
-                            .show();
-                } else {
-                    Toast.makeText(this, "Permission allowed", Toast.LENGTH_SHORT).show();
-                }
-                break;
             //相机
             case TAKE_PHOTO:
                 tempFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),

@@ -62,9 +62,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     //我的位置
     LinearLayout mMyLocation;
 
-    //关于软件
-    LinearLayout mAboutSoftware;
-
     private String url;
 
 

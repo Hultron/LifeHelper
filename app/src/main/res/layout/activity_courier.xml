@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -10,7 +11,7 @@
         android:id="@+id/courier_com"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="快递公司"
+        android:hint="快递代码：sf(顺丰)，yd(韵达)，zt(中通)，yt(圆通)"
         android:text="sf"/>
 
     <EditText
@@ -29,11 +30,11 @@
         android:textColor="@android:color/white"/>
 
     <ListView
-        android:scrollbars="none"
-        android:paddingLeft="10dp"
         android:id="@+id/courier_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:paddingLeft="10dp"
+        android:scrollbars="none"/>
 
 </LinearLayout>

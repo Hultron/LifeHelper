@@ -12,7 +12,7 @@ import com.hultron.lifehelper.entity.CourierData;
 
 import java.util.List;
 
-/**
+/*
  * 快递查询适配器
  */
 
@@ -48,7 +48,7 @@ public class CourierAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         //第一次加载
         if (convertView == null) {
             holder = new ViewHolder();
@@ -70,7 +70,7 @@ public class CourierAdapter extends BaseAdapter {
         return convertView;
     }
 
-    class ViewHolder {
+    private class ViewHolder {
         private TextView mRemark;
         private TextView mZone;
         private TextView mDatetime;

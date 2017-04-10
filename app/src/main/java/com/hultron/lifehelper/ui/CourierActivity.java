@@ -31,7 +31,7 @@ public class CourierActivity extends BaseActivity implements View.OnClickListene
 
     private EditText mCourierCom, mCourierNo;
     private ListView mCourierList;
-    private Button mGetCourier;
+    Button mGetCourier;
     private List<CourierData> mCourierDataList = new ArrayList<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,7 +49,6 @@ public class CourierActivity extends BaseActivity implements View.OnClickListene
         mGetCourier = (Button) findViewById(R.id.get_courier);
         mGetCourier.setOnClickListener(this);
         mCourierList = (ListView) findViewById(R.id.courier_list);
-
     }
 
     @Override

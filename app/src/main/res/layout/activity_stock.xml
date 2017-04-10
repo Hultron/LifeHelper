@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/max_price"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:text="最大值为：100"/>
+
+    <TextView
+        android:text="当前值为：90"
+        android:gravity="center"
+        android:id="@+id/current_price"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"/>
+
+
+    <Button
+        android:id="@+id/get_current_price"
+        android:text="点击刷新"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

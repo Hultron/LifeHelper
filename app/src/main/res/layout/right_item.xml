@@ -15,7 +15,9 @@
         android:padding="20dp"
         android:text="右边"
         android:textColor="@android:color/white"/>
+
     <ImageView
+        android:id="@+id/right_profile"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginRight="10dp"

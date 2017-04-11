@@ -20,7 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.hultron.lifehelper.entity.MyUser;
-import com.hultron.lifehelper.fragment.HelperFragment;
+import com.hultron.lifehelper.fragment.ChatListFragment;
 import com.hultron.lifehelper.fragment.GirlsFragment;
 import com.hultron.lifehelper.fragment.NewsFragment;
 import com.hultron.lifehelper.ui.AboutSoftwareActivity;
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements
         mTitles.add(getString(R.string.girls_welfare));
 
         mFragments = new ArrayList<>();
-        mFragments.add(new HelperFragment());
+        mFragments.add(new ChatListFragment());
         mFragments.add(new NewsFragment());
         mFragments.add(new GirlsFragment());
 

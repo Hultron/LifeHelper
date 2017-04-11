@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import com.hultron.lifehelper.adapter.ChatListAdapter;
 import com.hultron.lifehelper.entity.ChatListData;
 import com.hultron.lifehelper.uitils.LogUtil;
 import com.hultron.lifehelper.uitils.ShareUtil;
+import com.hultron.lifehelper.uitils.UtilTools;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechSynthesizer;
@@ -35,7 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HelperFragment extends Fragment implements View.OnClickListener {
+public class ChatListFragment extends Fragment implements View.OnClickListener {
     private ListView mChatListView;
 
     private List<ChatListData> mList = new ArrayList<>();
@@ -47,8 +49,10 @@ public class HelperFragment extends Fragment implements View.OnClickListener {
     private EditText mEdtChat;
     //发送按钮
     private Button mBtnSend;
-    //生活小助手
-    private LinearLayout lifeHelper;
+    //聊天机器人
+    private LinearLayout TuringRobot;
+    //用户头像
+    private ImageView profile;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,7 +71,7 @@ public class HelperFragment extends Fragment implements View.OnClickListener {
                 parent.removeView(view);
             }
         } else {
-            view = inflater.inflate(R.layout.fragment_helper, container, false);
+            view = inflater.inflate(R.layout.fragment_chat_list, container, false);
             findView(view);// 控件初始化
         }
         //隐藏软键盘
@@ -84,7 +88,7 @@ public class HelperFragment extends Fragment implements View.OnClickListener {
         * 语音合成
         * */
         //2.合成参数设置，详见《科大讯飞MSC API手册(Android)》SpeechSynthesizer 类
-        mTts.setParameter(SpeechConstant.VOICE_NAME, "Jarvis");//设置发音人
+        mTts.setParameter(SpeechConstant.VOICE_NAME, "Turing");//设置发音人
         mTts.setParameter(SpeechConstant.SPEED, "50");//设置语速
         mTts.setParameter(SpeechConstant.VOLUME, "80");//设置音量，范围0~100
         mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD); //设置云端
@@ -95,7 +99,7 @@ public class HelperFragment extends Fragment implements View.OnClickListener {
         mBtnSend = (Button) v.findViewById(R.id.btn_send);
         mBtnSend.setOnClickListener(this);
 
-        lifeHelper = (LinearLayout) v.findViewById(R.id.life_helper);
+        TuringRobot = (LinearLayout) v.findViewById(R.id.turing_robot);
 
         //设置适配器
         adapter = new ChatListAdapter(getActivity(), mList);

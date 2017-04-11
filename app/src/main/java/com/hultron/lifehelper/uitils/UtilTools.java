@@ -34,13 +34,13 @@ public class UtilTools {
         byte[] byteArray = byteArrayOutputStream.toByteArray();
         String imageString = new String(Base64.encode(byteArray, Base64.DEFAULT));
         //第三步：将String保存到ShareUtils
-        ShareUtil.putString(context, "image_title", imageString);
+        ShareUtil.putString(context, StaticClass.IMAGE_TITLE, imageString);
     }
 
     //从ShareUtils获取图片
     public static void getImageFromShare(Context context, ImageView imageView) {
         //1.拿到String
-        String imgString = ShareUtil.getString(context, "image_title", "");
+        String imgString = ShareUtil.getString(context, StaticClass.IMAGE_TITLE, "");
         if (!imgString.equals("")) {
             //2.利用Base64将字符串转化为字节数组
             byte[] b = Base64.decode(imgString, Base64.DEFAULT);

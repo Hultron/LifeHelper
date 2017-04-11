@@ -47,6 +47,9 @@ public class StaticClass {
 
     //天气查询城市id
     public static final String WEATHER_ID = "weatherId";
+
+    //头像
+    public static final String IMAGE_TITLE = "image_title";
 }
 
 

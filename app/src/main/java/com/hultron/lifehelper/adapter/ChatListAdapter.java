@@ -5,9 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.hultron.lifehelper.R;
+import com.hultron.lifehelper.application.BaseApplication;
 import com.hultron.lifehelper.entity.ChatListData;
+import com.hultron.lifehelper.uitils.UtilTools;
+
 import java.util.List;
 
 /**
@@ -20,7 +25,6 @@ public class ChatListAdapter extends BaseAdapter {
     private LayoutInflater mLayoutInflater;
     private List<ChatListData> mChatList;
     private ChatListData data;
-
 
     //左边的type
     public static final int VALUE_LEFT_TEXT = 1;
@@ -60,15 +64,17 @@ public class ChatListAdapter extends BaseAdapter {
             switch (type) {
                 case VALUE_LEFT_TEXT:
                     leftViewHolder = new LeftViewHolder();
-                    convertView = mLayoutInflater.inflate(R.layout.left_item, null);
+                    convertView = mLayoutInflater.inflate(R.layout.left_item, parent, false);
                     leftViewHolder.leftText = (TextView) convertView.findViewById(R.id.left_text);
                     convertView.setTag(leftViewHolder);
                     break;
                 case VALUE_RIGHT_TEXT:
                     rightViewHolder = new RightViewHolder();
-                    convertView = mLayoutInflater.inflate(R.layout.right_item, null);
+                    convertView = mLayoutInflater.inflate(R.layout.right_item, parent, false);
                     rightViewHolder.rightText = (TextView) convertView.findViewById(R.id
                             .right_text);
+                    rightViewHolder.rightProfile = (ImageView) convertView.findViewById(R.id.right_profile);
+                    UtilTools.getImageFromShare(BaseApplication.getContext(), rightViewHolder.rightProfile);
                     convertView.setTag(rightViewHolder);
                     break;
             }
@@ -100,8 +106,7 @@ public class ChatListAdapter extends BaseAdapter {
     @Override
     public int getItemViewType(int position) {
         ChatListData data = mChatList.get(position);
-        int type = data.getType();
-        return type;
+        return data.getType();
     }
 
     @Override
@@ -116,6 +121,7 @@ public class ChatListAdapter extends BaseAdapter {
 
     //右侧文本
     private class RightViewHolder {
+        private ImageView rightProfile;
         private TextView rightText;
     }
 }

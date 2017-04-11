@@ -33,6 +33,7 @@ public class CourierActivity extends BaseActivity implements View.OnClickListene
     private ListView mCourierList;
     Button mGetCourier;
     private List<CourierData> mCourierDataList = new ArrayList<>();
+    
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

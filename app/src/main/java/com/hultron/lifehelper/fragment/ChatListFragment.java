@@ -12,7 +12,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -22,7 +21,6 @@ import com.hultron.lifehelper.adapter.ChatListAdapter;
 import com.hultron.lifehelper.entity.ChatListData;
 import com.hultron.lifehelper.uitils.LogUtil;
 import com.hultron.lifehelper.uitils.ShareUtil;
-import com.hultron.lifehelper.uitils.UtilTools;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechSynthesizer;
@@ -51,9 +49,6 @@ public class ChatListFragment extends Fragment implements View.OnClickListener {
     private Button mBtnSend;
     //聊天机器人
     private LinearLayout TuringRobot;
-    //用户头像
-    private ImageView profile;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -22,7 +22,7 @@
         android:id="@+id/right_profile"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:scaleType="fitCenter"
         android:src="@drawable/user"
         app:riv_border_color="#333333"

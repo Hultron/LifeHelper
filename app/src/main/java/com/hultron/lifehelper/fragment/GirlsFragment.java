@@ -94,7 +94,6 @@ public class GirlsFragment extends Fragment {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 R.layout.dialog_girl, R.style.Theme_dialog, Gravity.CENTER);
-        mCustomDialog.setCancelable(true);
         mForseeImage = (ImageView) mCustomDialog.findViewById(R.id.dialog_im);
 
         //监听点击事件

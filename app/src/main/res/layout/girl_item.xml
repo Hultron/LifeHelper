@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/girl_item"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        app:riv_border_color="#333333"
+        app:riv_corner_radius="30dip"
+        app:riv_mutate_background="true"
+        app:riv_tile_mode="repeat"
+        tools:src="@color/color_black"/>
 
 </LinearLayout>

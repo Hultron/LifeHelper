@@ -89,6 +89,9 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+
+    //圆角图片
+    compile 'com.makeramen:roundedimageview:2.3.0'
 }
 
 android.packagingOptions {

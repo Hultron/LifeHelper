@@ -49,7 +49,7 @@ public class PicassoUtils {
     }
 
     // 按比例裁剪，矩形
-    public static class CropSquareTransformation implements Transformation {
+    private static class CropSquareTransformation implements Transformation {
         @Override
         public Bitmap transform(Bitmap source) {
             int size = Math.min(source.getWidth(), source.getHeight());

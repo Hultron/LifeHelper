@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -23,17 +22,12 @@ public class NewsAdapter extends BaseAdapter {
     private LayoutInflater mLayoutInflater;
     private List<NewsData> mNewsDataList;
     private NewsData mNewsData;
-    private int width, height;
-    private WindowManager wm;
 
     public NewsAdapter(Context context, List<NewsData> newsDataList) {
         mContext = context;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context
                 .LAYOUT_INFLATER_SERVICE);
         mNewsDataList = newsDataList;
-        wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-        width = wm.getDefaultDisplay().getWidth();
-        height = wm.getDefaultDisplay().getHeight();
     }
 
     @Override

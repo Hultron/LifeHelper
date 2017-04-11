@@ -75,10 +75,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             //显示用户名和密码
             mUserName.setText(ShareUtil.getString(this, "name", ""));
             mPassword.setText(ShareUtil.getString(this, "password", ""));
+            mUserName.setSelection(mUserName.length());
         }
 
-//        mCustomDialog = new CustomDialog(this, 400, 400, R.layout.dialog_loading, R.style
-//                .Theme_dialog, Gravity.CENTER);
+        //        mCustomDialog = new CustomDialog(this, 400, 400, R.layout.dialog_loading, R.style
+        //                .Theme_dialog, Gravity.CENTER);
 
         mProgressDialog = new ProgressDialog(this);
         //屏幕外点击无效
@@ -90,7 +91,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     }
-
 
 
     @Override

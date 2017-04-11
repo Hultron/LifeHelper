@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,9 +33,10 @@ public class PhoneActivity extends BaseActivity implements View.OnClickListener 
     //结果
     private TextView result;
     //按钮
-    private Button zero, one, two, three, four, five, six, seven, eight, nine, delete, query;
+    private Button query;
+    //private Button zero, one, two, three, four, five, six, seven, eight, nine, delete, query;
     //标记位
-    private boolean flag = false;
+    //private boolean flag = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,35 +50,35 @@ public class PhoneActivity extends BaseActivity implements View.OnClickListener 
         number = (EditText) findViewById(R.id.ph_number);
         mCompany = (ImageView) findViewById(R.id.company);
         result = (TextView) findViewById(R.id.result);
-        zero = (Button) findViewById(R.id.zero);
-        zero.setOnClickListener(this);
-        one = (Button) findViewById(R.id.one);
-        one.setOnClickListener(this);
-        two = (Button) findViewById(R.id.two);
-        two.setOnClickListener(this);
-        three = (Button) findViewById(R.id.three);
-        three.setOnClickListener(this);
-        four = (Button) findViewById(R.id.four);
-        four.setOnClickListener(this);
-        five = (Button) findViewById(R.id.five);
-        five.setOnClickListener(this);
-        six = (Button) findViewById(R.id.six);
-        six.setOnClickListener(this);
-        seven = (Button) findViewById(R.id.seven);
-        seven.setOnClickListener(this);
-        eight = (Button) findViewById(R.id.eight);
-        eight.setOnClickListener(this);
-        nine = (Button) findViewById(R.id.nine);
-        nine.setOnClickListener(this);
-        delete = (Button) findViewById(R.id.del);
-        delete.setOnClickListener(this);
-        delete.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                number.setText("");
-                return false;
-            }
-        });
+        //        zero = (Button) findViewById(R.id.zero);
+        //        zero.setOnClickListener(this);
+        //        one = (Button) findViewById(R.id.one);
+        //        one.setOnClickListener(this);
+        //        two = (Button) findViewById(R.id.two);
+        //        two.setOnClickListener(this);
+        //        three = (Button) findViewById(R.id.three);
+        //        three.setOnClickListener(this);
+        //        four = (Button) findViewById(R.id.four);
+        //        four.setOnClickListener(this);
+        //        five = (Button) findViewById(R.id.five);
+        //        five.setOnClickListener(this);
+        //        six = (Button) findViewById(R.id.six);
+        //        six.setOnClickListener(this);
+        //        seven = (Button) findViewById(R.id.seven);
+        //        seven.setOnClickListener(this);
+        //        eight = (Button) findViewById(R.id.eight);
+        //        eight.setOnClickListener(this);
+        //        nine = (Button) findViewById(R.id.nine);
+        //        nine.setOnClickListener(this);
+        //        delete = (Button) findViewById(R.id.del);
+        //        delete.setOnClickListener(this);
+        //        delete.setOnLongClickListener(new View.OnLongClickListener() {
+        //            @Override
+        //            public boolean onLongClick(View v) {
+        //                number.setText("");
+        //                return false;
+        //            }
+        //        });
         query = (Button) findViewById(R.id.query);
         query.setOnClickListener(this);
     }
@@ -100,43 +102,49 @@ public class PhoneActivity extends BaseActivity implements View.OnClickListener 
         //获取输入框的内容
         String content = number.getText().toString();
         switch (v.getId()) {
-            case R.id.zero:
-            case R.id.one:
-            case R.id.two:
-            case R.id.three:
-            case R.id.four:
-            case R.id.five:
-            case R.id.six:
-            case R.id.seven:
-            case R.id.eight:
-            case R.id.nine:
-                if (flag == true) {
-                    content = "";
-                    number.setText("");
-                    flag = false;
-                }
-                number.setText(content + ((Button) v).getText());
-                //移动光标
-                if (content.length() >= 11) {
-                    Toast.makeText(this, "输入号码超出11位，请删除多余内容",
-                            Toast.LENGTH_SHORT).show();
-                    number.setEnabled(false);
-                } else {
-                    number.setSelection(content.length() + 1);
-                }
-                break;
-            case R.id.del:
-                if (!TextUtils.isEmpty(content) && content.length() > 0) {
-                    number.setEnabled(true);
-                    //每次结尾减1
-                    number.setText(content.substring(0, content.length() - 1));
-                    number.setSelection(content.length() - 1);
-                }
-                break;
+            //            case R.id.zero:
+            //            case R.id.one:
+            //            case R.id.two:
+            //            case R.id.three:
+            //            case R.id.four:
+            //            case R.id.five:
+            //            case R.id.six:
+            //            case R.id.seven:
+            //            case R.id.eight:
+            //            case R.id.nine:
+            //                if (flag == true) {
+            //                    content = "";
+            //                    number.setText("");
+            //                    flag = false;
+            //                }
+            //                number.setText(content + ((Button) v).getText());
+            //移动光标
+            //                            if (content.length() >= 11) {
+            //                                Toast.makeText(this, "输入号码超出11位，请删除多余内容",
+            //                                        Toast.LENGTH_SHORT).show();
+            //                                number.setEnabled(false);
+            //                            } else {
+            //                                number.setSelection(content.length() + 1);
+            //                            }
+            //                            break;
+            //                        case R.id.del:
+            //                            if (!TextUtils.isEmpty(content) && content.length() > 0) {
+            //                                number.setEnabled(true);
+            //                                //每次结尾减1
+            //                                number.setText(content.substring(0, content.length
+            // () - 1));
+            //                                number.setSelection(content.length() - 1);
+            //                            }
+            //                            break;
             case R.id.query:
                 if (!TextUtils.isEmpty(content)) {
                     getPhone(content);
+                    Toast.makeText(this, content, Toast.LENGTH_SHORT).show();
                 }
+                //隐藏系统键盘
+                InputMethodManager imm = (InputMethodManager) this.getSystemService
+                        (INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(query.getWindowToken(), 0);
                 break;
         }
 
@@ -178,11 +186,18 @@ public class PhoneActivity extends BaseActivity implements View.OnClickListener 
             String company = jsonResult.getString("company");
             String card = jsonResult.getString("card");
 
-            result.setText("归属地：" + province + city + "\n" +
-                    "区号：" + areacode + "\n" +
-                    "邮编：" + zip + "\n" +
-                    "运营商：" + company + "\n" +
-                    "类型：" + card);
+            if (!TextUtils.isEmpty(card)) {
+                result.setText("归属地：" + province + city + "\n" +
+                        "区号：" + areacode + "\n" +
+                        "邮编：" + zip + "\n" +
+                        "运营商：" + company + "\n" +
+                        "类型：" + card);
+            } else {
+                result.setText("归属地：" + province + city + "\n" +
+                        "区号：" + areacode + "\n" +
+                        "邮编：" + zip + "\n" +
+                        "运营商：" + company + "\n");
+            }
 
             //图片显示
             switch (company) {
@@ -196,7 +211,7 @@ public class PhoneActivity extends BaseActivity implements View.OnClickListener 
                     mCompany.setBackgroundResource(R.drawable.china_telecom);
                     break;
             }
-            flag = true;
+            //flag = true;
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -67,6 +67,7 @@ public class NewsFragment extends Fragment {
         requestNews();
         mNewsAdapter = new NewsAdapter(getActivity(), mNewsDataList);
         mNewsList.setAdapter(mNewsAdapter);
+        mNewsAdapter.notifyDataSetChanged();
 
         //为listview设置点击事件
         mNewsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
